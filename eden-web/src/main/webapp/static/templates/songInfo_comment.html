@@ -1,0 +1,51 @@
+{#foreach $T as record}
+<div class="b-a b-light padder-v padder">
+    <a href="#" class="pull-left thumb avatar m-r">
+        <img src="{$T.record.userAvatarUrl}">
+    </a>
+    <div class="clear">
+        <!--单个评论-->
+        <div>
+            <a href="#" data-bjax class="text-info">{$T.record.username}&nbsp;</a>:&nbsp;&nbsp;
+            <span>{$T.record.content}</span>
+            <span class="pull-right">{fmtDate($T.record.addDate,'yyyy-MM-dd hh:mm')}</span>
+        </div>
+
+        <!--回复-->
+        <div class="bg-light lter ">
+            {#foreach $T.record.childComments as childComment}
+                <div>
+                    <a href="#" class="text-info">@{$T.childComment.username}&nbsp;</a>:&nbsp;&nbsp;
+                    <span>{$T.childComment.content}</span>
+                    <span class="pull-right">{fmtDate($T.childComment.addDate,'yyyy-MM-dd hh:mm')}</span>
+                </div>
+            {#/for}
+        </div>
+
+        <!--回复的 赞-->
+        <div class="clear">
+            <div class="pull-right handle">
+                <span class="click">
+                    <i class="icon-like icon"></i>
+                    ({$T.record.praiseCount})
+                </span>
+                <span class="click" data-toggle="show" data-target="#reply{$T.record$index}">
+                    回复({$T.record.childCommentCount})
+                </span>
+
+            </div>
+
+        </div>
+
+        <!--对单个评论的回复-->
+        <div class="clear hidden animated fadeInUp" id="reply{$T.record$index}">
+            <textarea class="form-control" rows="2" ></textarea>
+            <div class="m-t m-xs">
+                <button data-fatherCommentId="{$T.record.id}" class="btn btn-xs btn-default pull-right">回复</button>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+    <div class="clearfix"></div>
+</div>
+{#/for}
