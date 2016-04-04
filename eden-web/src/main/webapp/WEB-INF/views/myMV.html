@@ -264,7 +264,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="events.html">
+                                        <a href="/myUpload" data-bjax>
                                             <i class="icon-cloud-upload icon"></i>
                                             <!--<b class="badge bg-primary pull-right">6</b>-->
                                             <span class="font-bold">我的上传</span>
@@ -297,7 +297,7 @@
                                 complete:function(data,element){
                                     //数据长度为0时
                                     if(data.rows.length==0){
-                                        element.html('<span class="h3 m-l">暂无数据</span>');
+                                        element.html('<div class="m-l ">No data available</div>');
                                     }
                                 }
                             });

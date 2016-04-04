@@ -1,9 +1,6 @@
 package com.liaoyb.persistence.dao.custom;
 
-import com.liaoyb.persistence.domain.dto.ArtistDto;
-import com.liaoyb.persistence.domain.dto.UserDto;
-import com.liaoyb.persistence.domain.dto.UserPlay;
-import com.liaoyb.persistence.domain.vo.base.Songlist;
+import com.liaoyb.persistence.domain.dto.*;
 import com.liaoyb.persistence.domain.vo.base.User;
 import com.liaoyb.persistence.domain.vo.base.Userlisten;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
@@ -16,6 +13,13 @@ import java.util.List;
  * @author ybliao2
  */
 public interface UserMapperCustom {
+
+    /**
+     * 用户详细信息
+     * @param userId
+     * @return
+     */
+    public UserInfo findUserInfo(@Param("userId") Long userId);
 
 
 
@@ -62,11 +66,32 @@ public interface UserMapperCustom {
     UserDto userLogin(@Param("user") User user);
 
     /**
+     * 用户关注的用户
+     * @param userId
+     * @return
+     */
+    List<User>findUserFocus(@Param("userId")Long userId);
+
+    /**
+     * 用户的粉丝
+     * @param userId
+     * @return
+     */
+    List<User>findUserFans(@Param("userId")Long userId);
+
+    /**
      * 用户收藏的mv
      * @param userId
      * @return
      */
     List<SongCustom>findUserMV(@Param("userId") Long userId);
+
+    /**
+     * 用户上传的（音乐,mv）
+     * @param userId
+     * @return
+     */
+    List<SongDto>findUserUpload(@Param("userId")Long userId);
 
 
     /**
@@ -90,7 +115,7 @@ public interface UserMapperCustom {
      * @param userId
      * @return
      */
-    List<Songlist>findSonglistsUserCreated(Long userId);
+    List<SonglistCountDto>findSonglistsUserCreated(Long userId);
 
 
 
@@ -99,7 +124,7 @@ public interface UserMapperCustom {
      * @param userId
      * @return
      */
-    List<Songlist>findSonglistUserCollected(Long userId);
+    List<SonglistCountDto>findSonglistUserCollected(Long userId);
 
 
     /**

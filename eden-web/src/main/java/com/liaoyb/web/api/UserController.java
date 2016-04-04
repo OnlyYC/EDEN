@@ -2,14 +2,12 @@ package com.liaoyb.web.api;
 
 import com.liaoyb.base.annotation.AuthPassport;
 import com.liaoyb.base.domain.Page;
-import com.liaoyb.persistence.domain.dto.ArtistDto;
-import com.liaoyb.persistence.domain.dto.Response;
-import com.liaoyb.persistence.domain.dto.UserDto;
-import com.liaoyb.persistence.domain.dto.UserPlay;
+import com.liaoyb.persistence.domain.dto.*;
 import com.liaoyb.persistence.domain.vo.base.User;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
 import com.liaoyb.persistence.service.UserService;
 import com.liaoyb.persistence.serviceImpl.UserServiceImpl;
+import com.liaoyb.support.exception.SourcesNotFoundException;
 import com.liaoyb.support.utils.MyResultUtil;
 import com.liaoyb.support.utils.WebUtils;
 import com.liaoyb.util.MailUtil;
@@ -25,6 +23,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -192,6 +191,77 @@ public class UserController {
         }else{
             return "hint/registerError";
         }
+    }
+
+
+
+    /**
+     * 用户创建的歌单
+     * @param request
+     * @param response
+     * @param userId
+     */
+    @RequestMapping("/findSonglistUserCreated")
+    public void findSonglistUserCreated(HttpServletRequest request,HttpServletResponse response,Long userId){
+        List<SonglistCountDto>songlistCountDtos= userService.findSonglistsUserCreated(userId);
+        MyResultUtil.sendList(response,songlistCountDtos);
+    }
+
+    /**
+     * 用户收藏的歌单
+     * @param request
+     * @param response
+     * @param userId
+     */
+    @RequestMapping("/findSonglistUserCollected")
+    public void findSonglistUserCollected(HttpServletRequest request,HttpServletResponse response,Long userId){
+        List<SonglistCountDto>songlistCountDtos=userService.findSonglistsUserCollected(userId);
+        MyResultUtil.sendList(response,songlistCountDtos);
+    }
+
+
+    /**
+     * 用户关注的用户
+     * @param request
+     * @param response
+     * @param userId
+     */
+    @RequestMapping("/findUserFocus")
+    public void findUserFocus(HttpServletRequest request,HttpServletResponse response,Long userId){
+
+        List<User>users=userService.findUserFocus(userId);
+        MyResultUtil.sendList(response,users);
+    }
+
+    /**
+     * 用户粉丝
+     * @param request
+     * @param response
+     * @param userId
+     */
+    @RequestMapping("/findUserFans")
+    public void findUserFans(HttpServletRequest request,HttpServletResponse response,Long userId){
+        List<User>users=userService.findUserFans(userId);
+        MyResultUtil.sendList(response,users);
+
+    }
+
+
+    /**
+     * 我的上传
+     * @param request
+     * @param response
+     */
+    @RequestMapping("/myUpload")
+    @AuthPassport
+    public void myUpload(HttpServletRequest request,HttpServletResponse response,Page<SongDto>page) throws SourcesNotFoundException {
+        UserDto userDto=WebUtils.getCurrentUser(request);
+        if(userDto==null){
+            throw new SourcesNotFoundException();
+        }
+        page=userService.findUserUpload(page,userDto.getId());
+        MyResultUtil.sendPage(response,page);
+
     }
 
 

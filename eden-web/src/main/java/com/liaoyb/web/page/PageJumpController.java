@@ -6,6 +6,8 @@ import com.liaoyb.base.SysCode;
 import com.liaoyb.base.annotation.AuthPassport;
 import com.liaoyb.persistence.domain.dto.ArtistDto;
 import com.liaoyb.persistence.domain.dto.SonglistDto;
+import com.liaoyb.persistence.domain.dto.UserDto;
+import com.liaoyb.persistence.domain.dto.UserInfo;
 import com.liaoyb.persistence.domain.vo.base.Album;
 import com.liaoyb.persistence.domain.vo.base.User;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
@@ -39,6 +41,8 @@ public class PageJumpController {
     private AlbumService albumService;
     @Autowired
     private SongTypeService songTypeService;
+    @Autowired
+    private UserService userService;
 
 
 
@@ -160,6 +164,74 @@ public class PageJumpController {
         //把地区放在域中
         map.put("areas", Dictionary.Area.values());
         return "discover";
+    }
+
+
+    /**
+     * 用户主页
+     * @param map
+     * @param request
+     * @param userId
+     * @return
+     * @throws SourcesNotFoundException
+     */
+    @RequestMapping("/userHome/{userId}")
+    public String userHome(Map map,HttpServletRequest request,@PathVariable Long userId) throws SourcesNotFoundException {
+
+        UserInfo userInfo=userService.findUserInfo(userId);
+        if(userInfo==null){
+            throw new SourcesNotFoundException();
+        }
+        map.put("userInfo",userInfo);
+        //如果是当前用户
+        UserDto userDto=WebUtils.getCurrentUser(request);
+        if(userDto!=null&&userInfo.getId().equals(userDto.getId())){
+            return "userHome";
+        }
+
+        return "otherUserHome";
+    }
+
+    /**
+     * 用户关注
+     * @param map
+     * @param request
+     * @param userId
+     * @return
+     * @throws SourcesNotFoundException
+     */
+    @RequestMapping("/userFocus/{userId}")
+    public String userFocus(Map map,HttpServletRequest request,@PathVariable Long userId) throws SourcesNotFoundException {
+        User user=userService.findUser(userId);
+        if(user==null){
+            throw new SourcesNotFoundException();
+        }
+        map.put("user",user);
+        return "focus";
+    }
+
+    /**
+     * 用户粉丝
+     * @param map
+     * @param request
+     * @param userId
+     * @return
+     * @throws SourcesNotFoundException
+     */
+    @RequestMapping("/userFans/{userId}")
+    public String userFans(Map map,HttpServletRequest request,@PathVariable Long userId) throws SourcesNotFoundException {
+        User user=userService.findUser(userId);
+        if(user==null){
+            throw new SourcesNotFoundException();
+        }
+        map.put("user",user);
+        return "fans";
+    }
+
+    @RequestMapping("/myUpload")
+    @AuthPassport
+    public String myUpload(){
+        return "myUpload";
     }
 
 

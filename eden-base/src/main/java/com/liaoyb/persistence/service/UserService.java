@@ -1,11 +1,7 @@
 package com.liaoyb.persistence.service;
 
 import com.liaoyb.base.domain.Page;
-import com.liaoyb.persistence.domain.dto.ArtistDto;
-import com.liaoyb.persistence.domain.dto.Response;
-import com.liaoyb.persistence.domain.dto.UserDto;
-import com.liaoyb.persistence.domain.dto.UserPlay;
-import com.liaoyb.persistence.domain.vo.base.Songlist;
+import com.liaoyb.persistence.domain.dto.*;
 import com.liaoyb.persistence.domain.vo.base.User;
 import com.liaoyb.persistence.domain.vo.base.Userlisten;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
@@ -25,6 +21,34 @@ public interface UserService {
 
     //查询..............................................................
 
+
+    /**
+     * 用户
+     * @param userId
+     * @return
+     */
+    public User findUser(Long userId);
+    /**
+     * 用户详细信息
+     * @param userId
+     * @return
+     */
+    public UserInfo findUserInfo(Long userId);
+
+    /**
+     * 用户关注的用户
+     * @param userId
+     * @return
+     */
+    public List<User>findUserFocus(Long userId);
+
+    /**
+     * 用户的粉丝
+     * @param userId
+     * @return
+     */
+    public List<User>findUserFans(Long userId);
+
     /**
      * 用户收藏的mv
      * @param page
@@ -32,6 +56,15 @@ public interface UserService {
      * @return
      */
     public Page<SongCustom> findUserMV(Page<SongCustom> page, Long userId);
+
+
+    /**
+     * 用户上传（音乐，mv）
+     * @param page
+     * @param userId
+     * @return
+     */
+    public Page<SongDto>findUserUpload(Page<SongDto>page,Long userId);
 
 
     /**
@@ -76,7 +109,7 @@ public interface UserService {
      * @param userId 用户id
      * @return 歌单
      */
-    public List<Songlist>findSonglistsUserCreated(Long userId);
+    public List<SonglistCountDto>findSonglistsUserCreated(Long userId);
 
 
 
@@ -85,7 +118,7 @@ public interface UserService {
      * @param userId 用户id
      * @return 歌单
      */
-    public List<Songlist>findSonglistsUserCollected(Long userId);
+    public List<SonglistCountDto>findSonglistsUserCollected(Long userId);
 
 
 

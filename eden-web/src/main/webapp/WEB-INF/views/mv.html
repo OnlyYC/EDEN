@@ -263,7 +263,7 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="events.html">
+                                        <a href="/myUpload" data-bjax>
                                             <i class="icon-cloud-upload icon"></i>
                                             <span class="font-bold">我的上传</span>
                                         </a>
@@ -310,10 +310,10 @@
                                 request_param:function(){
                                     return area_lastmv;
                                 },
-                                complete:function(data){
+                                complete:function(data,element){
                                     //数据长度为0时
                                     if(data.rows.length==0){
-                                        $("#last_mv").html('<span class="h3 m-l">暂无数据</span>');
+                                        element.html('<div class="m-l ">No data available</div>');
                                     }
                                 }
                             });
@@ -331,10 +331,10 @@
                                 request_param:function(){
                                     return area_lastmv;
                                 },
-                                complete:function(data){
+                                complete:function(data,element){
                                     //数据长度为0时
                                     if(data.rows.length==0){
-                                        $("#hot_mv").html('<span class="h3 m-l">暂无数据</span>');
+                                        element.html('<div class="m-l ">No data available</div>');
                                     }
                                 }
                             });
@@ -351,10 +351,10 @@
                                 request_param:function(){
                                     return area_lastmv;
                                 },
-                                complete:function(data){
+                                complete:function(data,element){
                                     //数据长度为0时
                                     if(data.rows.length==0){
-                                        $("#rank_mv").html('<span class="h3 m-l">暂无数据</span>');
+                                        element.html('<div class="m-l ">No data available</div>');
                                     }
                                 }
                             });
@@ -370,11 +370,11 @@
                                 request_param:function(){
                                     return parm_allmv;
                                 },
-                                complete:function(data){
+                                complete:function(data,element){
                                     console.info(data);
                                     //数据长度为0时
                                     if(data.rows.length==0){
-                                        $("#all_mv").html('<span class="h3 m-l">暂无数据</span>');
+                                        element.html('<div class="m-l ">No data available</div>');
                                     }
                                 }
                             });

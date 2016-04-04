@@ -6,10 +6,7 @@ import com.liaoyb.base.domain.Page;
 import com.liaoyb.persistence.dao.base.*;
 import com.liaoyb.persistence.dao.custom.SongMapperCustom;
 import com.liaoyb.persistence.dao.custom.UserMapperCustom;
-import com.liaoyb.persistence.domain.dto.ArtistDto;
-import com.liaoyb.persistence.domain.dto.Response;
-import com.liaoyb.persistence.domain.dto.UserDto;
-import com.liaoyb.persistence.domain.dto.UserPlay;
+import com.liaoyb.persistence.domain.dto.*;
 import com.liaoyb.persistence.domain.vo.base.*;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
 import com.liaoyb.persistence.service.UserService;
@@ -67,6 +64,46 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 用户
+     * @param userId
+     * @return
+     */
+    public User findUser(Long userId){
+        return userMapper.selectByPrimaryKey(userId);
+    }
+
+    /**
+     * 用户详细信息
+     * @param userId
+     * @return
+     */
+    @Override
+    public UserInfo findUserInfo(Long userId) {
+        return userMapperCustom.findUserInfo(userId);
+    }
+
+    /**
+     * 用户关注的用户
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<User> findUserFocus(Long userId) {
+        return userMapperCustom.findUserFocus(userId);
+    }
+
+    /**
+     * 用户的粉丝
+     * @param userId
+     * @return
+     */
+    @Override
+    public List<User> findUserFans(Long userId) {
+        return userMapperCustom.findUserFans(userId);
+    }
+
+
+    /**
      * 用户收藏的mv
      * @param page
      * @param userId
@@ -76,6 +113,20 @@ public class UserServiceImpl implements UserService {
     public Page<SongCustom> findUserMV(Page<SongCustom> page, Long userId) {
         List<SongCustom>songCustoms=userMapperCustom.findUserMV(userId);
         page.setResult(songCustoms);
+        return page;
+    }
+
+
+    /**
+     * 用户上传（音乐，mv）
+     * @param page
+     * @param userId
+     * @return
+     */
+    @Override
+    @PageAnnotation
+    public Page<SongDto>findUserUpload(Page<SongDto>page,Long userId){
+        page.setResult(userMapperCustom.findUserUpload(userId));
         return page;
     }
 
@@ -146,7 +197,7 @@ public class UserServiceImpl implements UserService {
      * @return 歌单
      */
     @Override
-    public List<Songlist> findSonglistsUserCreated(Long userId) {
+    public List<SonglistCountDto> findSonglistsUserCreated(Long userId) {
         return userMapperCustom.findSonglistsUserCreated(userId);
     }
 
@@ -156,7 +207,7 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
-    public List<Songlist> findSonglistsUserCollected(Long userId) {
+    public List<SonglistCountDto> findSonglistsUserCollected(Long userId) {
         return userMapperCustom.findSonglistUserCollected(userId);
     }
 

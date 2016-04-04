@@ -527,7 +527,10 @@ function getObjProperty(obj){
         className:'',
         useParmData:false,//是否,把data-...作为请求参数
         complete:function(data,element){
-
+            //数据长度为0时
+            if(data.length==0){
+                element.html('<div class="m-l ">No data available</div>');
+            }
         }
     };
     $.fn.jtemplatePag.Constructor = JtemplatePag;

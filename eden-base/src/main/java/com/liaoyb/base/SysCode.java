@@ -43,6 +43,17 @@ public class SysCode {
 
 
 	/**
+	 * 收藏类型
+	 */
+	public static interface COLLECT_TYPE{
+		public static final Long SONGLIST=1L;
+		public static final Long ALBUM=2L;
+		public static final Long MV=3L;
+		public static final Long USER=4L;
+	}
+
+
+	/**
 	 * 用户权限
 	 */
 	public static interface USER_ROLE{
@@ -182,91 +193,7 @@ public class SysCode {
 		public static final String DESC = "desc";
 	}
 
-	/**
-	 * 日期格式（Java代码格式化时使用）
-	 * 
-	 * @author hjzhu
-	 * @lastModified
-	 * @history
-	 */
-	public static interface DATE_FORMAT {
-		/**
-		 * web端datetime日期格式
-		 */
-		public static final String DATATIME_WEB = "yyyy-MM-dd";
-		/**
-		 * web端datetime日期格式
-		 */
-		public static final String DATATIME_WEB_LONG = "yyyy-MM-dd HH:mm:ss";
-		/**
-		 * 数据库datetime日期格式
-		 */
-		public static final String DATATIME_DB = "yyyyMMddHHmmss";
 
-		/**
-		 * 一天中最小的时间
-		 */
-		public static final String MIN_DATETIME = "00:00:00";
-
-		/**
-		 * 一天中最大的时间
-		 */
-		public static final String MAX_DATETIME = "23:59:59";
-	}
-
-	/**
-	 * 特殊字符
-	 */
-	public static interface SPECIAL_CHARACTERS {
-		/**
-		 * 字符英文半角逗号=,
-		 */
-		public static final String COMMA = ",";
-
-		/**
-		 * 字符英文半角冒号=:
-		 */
-		public static final String COLON = ":";
-
-		/**
-		 * 字符串=0
-		 */
-		public static final String STR_ZERO = "0";
-
-		/**
-		 * 空字符串=
-		 */
-		public static final String NULL_STR = "";
-
-		/**
-		 * 点=.
-		 */
-		public static final String POINT = ".";
-		/**
-		 * 空格=
-		 */
-		public static final String SPACE = " ";
-
-		/**
-		 * 正则点=[.]
-		 */
-		public static final String REG_POINT = "[.]";
-
-		/**
-		 * 百分号=%
-		 */
-		public static final String PERCENT = "%";
-
-		/**
-		 * 正斜杠=/
-		 */
-		public static final String RIGHT_SPRIT = "/";
-
-		/**
-		 * 英文横杠=-
-		 */
-		public static final String SUBTRACT = "-";
-	}
 
 
 
