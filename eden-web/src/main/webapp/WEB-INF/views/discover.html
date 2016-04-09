@@ -283,10 +283,16 @@
                 <section class="hbox stretch" id="content">
 
                     <script>
+                        var default_active='{$defaultActive}';
                         //初始化
                         function init(){
                             //显示音乐播放器
                             $("#footerPlayer").slideDown();
+
+
+                            //激活tab
+                            active_tab();
+
                             //个性推荐
                             //推荐单曲
 
@@ -386,7 +392,6 @@
 //                            });
 
                             var artist_condition={
-                                name:'歌手1'
                             };
                             //歌手搜索结果
                             $("#artist_result").jtemplatePag({
@@ -504,6 +509,9 @@
 
 
 
+                        }
+                        function active_tab(){
+                            $("a[href='#"+default_active+"']").tab('show');
                         }
 
                     </script>

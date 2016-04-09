@@ -322,13 +322,17 @@
                                     type: 1,
                                     belongId: songInfo.song_id
                                 },
-                                complete: function (allData) {
+                                complete: function (data,element) {
                                     //设置评论总数
-                                    $("#comments_count").text(allData.total);
+                                    $("#comments_count").text(data.total);
                                     //如果评论数为0
-                                    if (allData.total == 0) {
+                                    if (data.total == 0) {
                                         $("#comment_body").append("<h3>还没有评论</h3>");
                                     }
+
+                                    $(element.find(".dy_comment_reply")).hideAndShow({
+
+                                    });
 
                                 }
                             });
@@ -406,7 +410,7 @@
                                         <span class="h3">{$songInfo.name}</span>
                                         <div class="m-t">
                                             {if $songInfo.albumName}
-                                                <span class="m-r">专辑: <a href="#" class="text-info">{$songInfo.albumName}</a></span>
+                                                <span class="m-r">专辑: <a href="/album/{$songInfo.albumId}" data-bjax class="text-info">{$songInfo.albumName}</a></span>
                                             {/if}
 
                                             {if $songInfo.artists|@count}

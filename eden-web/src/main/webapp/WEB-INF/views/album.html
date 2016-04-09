@@ -294,7 +294,7 @@
                             $("#footerPlayer").slideDown();
 
                             //设置发布时间
-                            $("#releaseTime").text(fmtDate(album.releaseTime, "yyyy-MM-dd"));
+                            $("#releaseTime").text(fmtDate(album.createTime, "yyyy-MM-dd"));
 
 
                             //专辑中的音乐，表格
@@ -313,6 +313,8 @@
                                     }
                                 },
                                 //"processing":true,
+                                "info":false,//左下的提示
+                                "lengthChange":false,//不显示设置每页多少的
                                 "autoWidth": false,
                                 "serverSide": true,
                                 "ordering": false,
@@ -430,13 +432,16 @@
                                     type:4,
                                     belongId:album.id
                                 },
-                                complete:function(allData){
+                                complete:function(data,element){
                                     //设置评论总数
-                                    $("#comments_count").text(allData.total);
+                                    $("#comments_count").text(data.total);
                                     //如果评论数为0
-                                    if(allData.total==0){
+                                    if(data.total==0){
                                         $("#comment_body").append("<h3>还没有评论</h3>");
                                     }
+                                    $(element.find(".dy_comment_reply")).hideAndShow({
+
+                                    });
 
                                 }
                             });
@@ -458,7 +463,7 @@
                                   <span class="clear">
                                     <div>
                                         <span class="bg-danger">专辑</span>
-                                        <span class="h3 m-l">{$album.artistName}</span>
+                                        <span class="h3 m-l">{$album.name}</span>
                                     </div>
                                     <div class="m-t">
                                         <div class="btn-group">
@@ -481,11 +486,11 @@
 
                                     </div>
                                     <div class="b-light m-t ">
-                                        <span class="text-muted clear text-ellipsis m-t">歌手
-                                            <a href="/artist/{$album.artistId}" data-bjax>{$album.name}</a>
+                                        <span class="text-muted clear text-ellipsis m-t">歌手:
+                                            <a href="/artist/{$album.artistId}" data-bjax>{$album.artistName}</a>
                                         </span>
-                                         <span class="text-muted clear text-ellipsis m-t" >时间
-                                            <a href="#" id="releaseTime">2015-04-20</a>
+                                         <span class="text-muted clear text-ellipsis m-t" >时间:
+                                            <span  id="releaseTime">2015-04-20</span>
                                         </span>
                                     </div>
 

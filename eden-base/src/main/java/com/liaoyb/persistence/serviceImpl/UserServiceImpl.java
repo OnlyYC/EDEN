@@ -83,6 +83,18 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 用户好友
+     *
+     * @param userId
+     * @param condition 查询条件
+     * @return
+     */
+    @Override
+    public List<UserFriend> findUserFriend(Long userId,User condition) {
+        return userMapperCustom.findUserFriend(userId,condition);
+    }
+
+    /**
      * 用户关注的用户
      * @param userId
      * @return

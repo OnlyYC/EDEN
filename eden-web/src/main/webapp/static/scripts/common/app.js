@@ -838,6 +838,122 @@ Date.now = Date.now || function () {
 
 
 
+//隐藏显示
++function ($) {
+    'use strict';
+
+    var HideAndShow = function (element, options) {
+            this.init(element, options);
+        },
+        old = null;
+
+
+    HideAndShow.prototype ={
+        init:function(element, options){
+            //初始化
+            //设置参数
+            this.$element = $(element);
+            this.options = $.extend({}, (this.options || $.fn.hideAndShow.defaults), options);
+
+
+
+
+
+        },
+        toggle:function(){
+            var that=this;
+            //除自己之外的全部隐藏
+            this.all.each(function(index, item){
+                var $this = $(item),data = $this.data('hideAndShow');
+                if(data===that){
+                    //
+                    console.info('自己人');
+
+                }else{
+                    $(data.options.target).slideUp();
+                }
+
+
+            });
+
+
+            //自己的隐藏显示
+            $(this.options.target).slideToggle();
+
+            //如果是第一调用toggle，调用firstClickCall
+            if(!this.isfirst){
+                this.options.firstClickCall(this.options.target,this.options.param);
+                this.isfirst=1;
+            }
+        }
+
+    };
+
+
+    old = $.fn.hideAndShow;
+
+    $.fn.hideAndShow = function (option) {
+
+        var args = arguments,
+            result = null,all=$(this);
+
+
+        $(this).each(function (index, item) {
+            console.info($(item).data());
+            var $this = $(item),
+                data = $this.data('hideAndShow'),
+                options = (typeof option !== 'object') ? null : option;
+                options=$.extend({},options,$(item).data());
+
+
+            //点击事件
+            $this.click(function(){
+                data.toggle();
+            });
+
+            if (!data) {
+                data = new HideAndShow(this, options);
+                data.all=all;
+
+                $this = $(data.$element);
+
+                $this.data('hideAndShow', data);
+
+                return;
+            }
+
+
+            if (typeof option === 'string') {
+
+                if (data[option]) {
+                    result = data[option].apply(data, Array.prototype.slice.call(args, 1));
+                } else {
+                    throw "Method " + option + " does not exist";
+                }
+
+            }
+        });
+
+        return result;
+
+    };
+
+    //
+    $.fn.hideAndShow.defaults={
+
+
+        firstClickCall:function(target,param){
+
+        }
+    };
+    $.fn.hideAndShow.Constructor = HideAndShow;
+
+
+}(jQuery);
+
+
+
+
 //
 +function ($) {
     'use strict';

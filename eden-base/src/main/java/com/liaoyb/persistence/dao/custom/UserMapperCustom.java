@@ -80,6 +80,13 @@ public interface UserMapperCustom {
     List<User>findUserFans(@Param("userId")Long userId);
 
     /**
+     * 用户好友
+     * @param userId
+     * @return
+     */
+    List<UserFriend>findUserFriend(@Param("userId")Long userId,@Param("condition") User condition);
+
+    /**
      * 用户收藏的mv
      * @param userId
      * @return

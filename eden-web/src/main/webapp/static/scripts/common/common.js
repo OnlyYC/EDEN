@@ -272,9 +272,9 @@ function getObjProperty(obj){
         initTemplate:function(){
             //初始化模板,
             if (this.options.template) {
-                this.template_dom.setTemplate(this.options.template);
+                this.template_dom.setTemplate(this.options.template,null,this.options.jTemplateSetting);
             } else {
-                this.template_dom.setTemplateURL(this.options.template_url);
+                this.template_dom.setTemplateURL(this.options.template_url,null,this.options.jTemplateSetting);
             }
         },
         init:function(element, options){
@@ -526,6 +526,7 @@ function getObjProperty(obj){
         paramType:1,//参数类型，默认是1,就是js对象；2为json格式，字符串,里面会转换成json格式传到后台
         className:'',
         useParmData:false,//是否,把data-...作为请求参数
+        jTemplateSetting:null,
         complete:function(data,element){
             //数据长度为0时
             if(data.length==0){

@@ -345,15 +345,15 @@
                                         <button class="btn btn-default">关注</button>
                                     </div>
                                     <div class="b-t  b-light m-t ">
-                                        <a href="#" class="thumb-md  padder">
+                                        <a href="/dynamic/{$userInfo.id}" data-bjax class="thumb-md  padder">
                                             <span class="h3">{$userInfo.dynamicCount}</span>
                                             <span class="text-muted clear text-ellipsis">动态</span>
                                         </a>
-                                        <a href="#" class="thumb-md b-l b-light padder">
+                                        <a href="/userFocus/{$userInfo.id}" data-bjax class="thumb-md b-l b-light padder">
                                             <span class="h3">{$userInfo.focusCount}</span>
                                             <span class="text-muted clear text-ellipsis">关注</span>
                                         </a>
-                                        <a href="#" class="thumb-md b-l b-light padder">
+                                        <a href="/userFans/{$userInfo.id}" data-bjax class="thumb-md b-l b-light padder">
                                             <span class="h3">{$userInfo.fansCount}</span>
                                             <span class="text-muted clear text-ellipsis">粉丝</span>
                                         </a>

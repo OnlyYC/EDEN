@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -154,7 +155,7 @@ public class PageJumpController {
 
     //discover页面
     @RequestMapping("/discover")
-    public String discover(Map map){
+    public String discover(Map map,String defaultActive){
         //把歌曲分类放在域中
         map.put("songTypes",songTypeService.findAllSongtypeCustoms());
         //官方榜单
@@ -163,6 +164,11 @@ public class PageJumpController {
         map.put("global_list",songlistService.findOfficialSonglist());
         //把地区放在域中
         map.put("areas", Dictionary.Area.values());
+        //默认激活的tab
+        if(defaultActive!=null){
+            map.put("defaultActive",defaultActive);
+        }
+
         return "discover";
     }
 
@@ -228,10 +234,46 @@ public class PageJumpController {
         return "fans";
     }
 
+    /**
+     * 我的上传页面
+     * @return
+     */
     @RequestMapping("/myUpload")
     @AuthPassport
     public String myUpload(){
         return "myUpload";
+    }
+
+
+    /**
+     * 我的朋友页面
+     * 需要登录
+     * @return
+     */
+    @RequestMapping("/friend")
+    @AuthPassport
+    public String friend(){
+        return "friend";
+    }
+
+
+    /**
+     * 用户的动态
+     * @param map
+     * @param userId
+     * @return
+     */
+    @RequestMapping("/dynamic/{userId}")
+    public String dynamic(Map map, @PathVariable Long userId)throws SourcesNotFoundException{
+
+        //用户
+        User user=userService.findUser(userId);
+        if(user==null){
+            throw new SourcesNotFoundException();
+        }
+        map.put("user",user);
+
+        return "dynamic";
     }
 
 

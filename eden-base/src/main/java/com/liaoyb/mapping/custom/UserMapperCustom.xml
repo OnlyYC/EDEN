@@ -146,5 +146,22 @@
         where s.userId=#{userId} and s.flag=1
     </select>
 
+    <!--用户好友-->
+    <select id="findUserFriend" resultType="com.liaoyb.persistence.domain.dto.UserFriend">
+        select ui.*,z.text    countryText
+        FROM (
+          SELECT u.* from user u
+          JOIN collect col on (u.id=col.targetId and col.userId=#{userId} and col.collectType=5)
+        )ui
+         LEFT JOIN zd z ON (z.code = ui.country AND z.type = 'country')
+         <where>
+             <if test="condition.name!=null">
+                 ui.name like CONCAT(CONCAT('%',#{condition.name}),'%')
+             </if>
+         </where>
+
+
+    </select>
+
 
 </mapper>

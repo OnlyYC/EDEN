@@ -302,6 +302,13 @@
                                 }
                             });
 
+                            $("#find_my_love_mv").click(function(){
+                                var url=baseUrl+'/mv';
+                                $(this).bjax({
+                                    url: url
+                                });
+                            });
+
                         }
                     </script>
 
@@ -317,7 +324,7 @@
 
 
 
-                            <div class="padder-v click b-a">
+                            <div class="padder-v click b-a" id="find_my_love_mv">
                                 <span class="h3 m-l">去寻找我喜欢的MV</span>
                                 <span class="fa fa-angle-right pull-right h2 m-r"></span>
                             </div>

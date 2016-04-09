@@ -125,6 +125,7 @@
 
     <!--其他工具,fastjson,log4j,email,mybatis插件,junit，spring-test-->
         <!--日志-->
+		
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>

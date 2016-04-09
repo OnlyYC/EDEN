@@ -265,6 +265,20 @@ public class UserController {
     }
 
 
+    /**
+     * 用户的好友（即用户关注的用户）
+     * @param request
+     * @param response
+     */
+    @RequestMapping("/myFriend")
+    @AuthPassport
+    public void myFriend(HttpServletRequest request,HttpServletResponse response,User condition){
+        UserDto userDto=WebUtils.getCurrentUser(request);
+        List<UserFriend>userFriends=userService.findUserFriend(userDto.getId(),condition);
+        MyResultUtil.sendList(response,userFriends);
+    }
+
+
 
 
 
