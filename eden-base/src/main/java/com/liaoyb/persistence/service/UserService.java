@@ -2,6 +2,7 @@ package com.liaoyb.persistence.service;
 
 import com.liaoyb.base.domain.Page;
 import com.liaoyb.persistence.domain.dto.*;
+import com.liaoyb.persistence.domain.vo.base.Songlist;
 import com.liaoyb.persistence.domain.vo.base.User;
 import com.liaoyb.persistence.domain.vo.base.Userlisten;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
@@ -211,4 +212,35 @@ public interface UserService {
      * @return
      */
     Page<User> findUser(Page<User> page, String searchText);
+
+    /**
+     * 添加歌曲到歌单
+     * @param songlistId
+     * @param songId
+     * @return
+     */
+    Response addSongToSonglist(Long userId,Long songlistId, Long songId);
+
+    /**
+     * 歌单是否能添加歌曲
+     * @param userId
+     * @param songlistId
+     * @return
+     */
+    boolean canAddSongToSonglist(Long userId,Long songlistId);
+
+    /**
+     * toggle歌曲从我喜欢歌单中
+     * @param userId
+     * @param songId
+     * @return
+     */
+    Response toggleSongFromLovelist(Long userId, Long songId);
+
+    /**
+     * 用户的我喜欢歌单（默认歌单）
+     * @param userId
+     * @return
+     */
+    Songlist findMyLoveSonglist(Long userId);
 }

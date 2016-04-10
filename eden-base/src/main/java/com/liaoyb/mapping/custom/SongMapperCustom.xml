@@ -74,6 +74,10 @@
         as `like` from song s
     </sql>
 
+    <!--对歌曲收藏量加1-->
+    <update id="addOneSongCollectCount">
+        UPDATE song set collectCount=collectCount+1 where id=#{songId}
+    </update>
 
 
     <!--根据Id查找音乐-->
@@ -252,6 +256,19 @@
             OR s.info LIKE CONCAT(CONCAT('%',#{searchText}),'%')
             )
         </where>
+    </select>
+
+    <!--随机-->
+    <select id="findSongDtoRandom" resultMap="SongDto_ResultMap">
+        <include refid="songDto_Base_Sql"/>
+        <where>
+            <if test="type!=null">
+                and s.type=#{type}
+            </if>
+            and s.flag=1
+        </where>
+
+        order by rand()
     </select>
 
 

@@ -256,9 +256,6 @@ public class UserController {
     @AuthPassport
     public void myUpload(HttpServletRequest request,HttpServletResponse response,Page<SongDto>page) throws SourcesNotFoundException {
         UserDto userDto=WebUtils.getCurrentUser(request);
-        if(userDto==null){
-            throw new SourcesNotFoundException();
-        }
         page=userService.findUserUpload(page,userDto.getId());
         MyResultUtil.sendPage(response,page);
 
@@ -290,6 +287,47 @@ public class UserController {
     public void findUser(HttpServletRequest request,HttpServletResponse response,Page<User>page,String searchText){
         page=userService.findUser(page,searchText);
         MyResultUtil.sendPage(response,page);
+    }
+
+
+    /**
+     * 我的歌单
+     * @param request
+     * @param response
+     */
+    @RequestMapping("/findMySonglist")
+    @AuthPassport
+    public void findMySonglist(HttpServletRequest request,HttpServletResponse response) throws SourcesNotFoundException {
+        UserDto userDto=WebUtils.getCurrentUser(request);
+        List<SonglistCountDto>songlistDtos=userService.findSonglistsUserCreated(userDto.getId());
+        MyResultUtil.sendList(response,songlistDtos);
+
+    }
+
+    /**
+     * 添加歌曲到歌单
+     * @param request
+     * @param response
+     * @param songlistId
+     * @param songId
+     */
+    @RequestMapping("/addSongToSonglist")
+    @AuthPassport
+    public void addSongToSonglist(HttpServletRequest request,HttpServletResponse response,Long songlistId,Long songId) {
+        UserDto userDto=WebUtils.getCurrentUser(request);
+        //歌单必须要自己创建
+        Response res=userService.addSongToSonglist(userDto.getId(),songlistId,songId);
+        MyResultUtil.sendResponse(response,res);
+    }
+
+
+
+    @RequestMapping("/toggleSongFromLovelist")
+    @AuthPassport
+    public void toggleSongFromLovelist(HttpServletRequest request,HttpServletResponse response,Long songId) {
+        UserDto userDto=WebUtils.getCurrentUser(request);
+        Response res=userService.toggleSongFromLovelist(userDto.getId(),songId);
+        MyResultUtil.sendResponse(response,res);
     }
 
 

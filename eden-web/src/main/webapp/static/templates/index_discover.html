@@ -13,14 +13,20 @@
                         <i class="icon-control-pause i-2x text-active"></i>
                     </a>
                 </div>
-                <div class="bottom padder m-b-sm" data-song_id="{$T.record.song_id }">
+                <div class="bottom padder m-b-sm" >
                     <!-- 喜欢，添加到喜欢列表 -->
-                    <a href="javascript:void(0);" class="pull-right" data-toggle="class">
+                    <a href="javascript:void(0);" data-song_id="{$T.record.song_id }" class="pull-right toggleFromMyLovelist" data-toggle="toggle">
+                        {#if $T.record.like}
+                        <i class="fa fa-heart-o  text-active"></i>
+                        <i class="fa fa-heart text text-danger"></i>
+                        {#else}
                         <i class="fa fa-heart-o text"></i>
                         <i class="fa fa-heart text-active text-danger"></i>
+                        {#/if}
+
                     </a>
-                    <!-- 添加到播放列表 -->
-                    <a href="javascript:void(0);"  class="addsonglist">
+                    <!-- 收藏 -->
+                    <a href="javascript:void(0);" data-song_id="{$T.record.song_id }"  class="addToSonglist">
                         <i class="fa fa-plus-circle text"></i>
                     </a>
                 </div>

@@ -147,4 +147,19 @@ public interface SongMapperCustom {
      * @return
      */
     public List<SongCustom> findSong(@Param("type") Integer type,@Param("searchText") String searchText);
+
+    /**
+     * 对歌曲收藏量加1
+     * @param songId
+     * @return
+     */
+    public int addOneSongCollectCount(Long songId);
+
+    /**
+     * 随机
+     * @param userId
+     * @param type
+     * @return
+     */
+    List<SongDto> findSongDtoRandom(@Param("userId") Long userId,@Param("type")Long type);
 }

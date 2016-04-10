@@ -2,6 +2,7 @@ package com.liaoyb.web.api;
 
 import com.liaoyb.base.SysCode;
 import com.liaoyb.base.domain.Page;
+import com.liaoyb.persistence.domain.dto.SongDto;
 import com.liaoyb.persistence.domain.dto.UserDto;
 import com.liaoyb.persistence.domain.vo.base.User;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
@@ -46,8 +47,9 @@ public class SongController {
      * @param page
      */
     @RequestMapping("/discover")
-    public void discover(HttpServletResponse response, Page<SongCustom> page){
-        page=songService.findSongCustomsRandom(page, SysCode.SONG_TYPE.SONG);
+    public void discover(HttpServletRequest request,HttpServletResponse response, Page<SongDto> page){
+        User currentUser= WebUtils.getCurrentUser(request);
+        page=songService.findSongDtoRandom(page,currentUser!=null?currentUser.getId():null,SysCode.SONG_TYPE.SONG);
         MyResultUtil.sendPage(response,page);
     }
 

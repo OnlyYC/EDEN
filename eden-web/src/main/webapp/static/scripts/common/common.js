@@ -114,8 +114,9 @@ var Alert = {
 };
 
 
+//fail_common表示失败都会执行，未登录，权限不足等
 var Base = {
-    processData: function (data, sucess_callback, fail_callback) {
+    processData: function (data, sucess_callback,fail_common,fail_callback) {
         if (data.flag) {
             //成功
             sucess_callback(data);
@@ -123,10 +124,20 @@ var Base = {
 
             //未登录
             Alert.warning("未登录");
+            if(fail_common){
+                fail_common(data);
+            }
+
         } else if (data.permissionDenied) {
             //权限不足
             Alert.error("权限不足");
+            if(fail_common){
+                fail_common(data);
+            }
         } else {
+            if(fail_common){
+                fail_common(data);
+            }
             if (fail_callback) {
                 //操作失败、消息获取失败
                 fail_callback(data);
@@ -417,6 +428,9 @@ function getObjProperty(obj){
 
                 that.complete();
 
+            },function(data){
+                that.$element.empty();
+                that.options.failCallBack(data);
             });
         },
         render:function(){
@@ -532,6 +546,10 @@ function getObjProperty(obj){
             if(data.length==0){
                 element.html('<div class="m-l ">No data available</div>');
             }
+        },
+        //数据获取失败的回调方法
+        failCallBack:function(data){
+
         }
     };
     $.fn.jtemplatePag.Constructor = JtemplatePag;

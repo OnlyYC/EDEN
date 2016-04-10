@@ -53,7 +53,7 @@
                 Base.processData(data,function(data){
                     Alert.success("注册成功，请先激活邮箱再登陆")
                     register_success();
-                },function(data){
+                },null,function(data){
                     Alert.error(data.message);
                     register_fail();
                 });
@@ -64,7 +64,7 @@
                 Base.processData(data,function(data){
                     Alert.success("登录成功");
                     login_success();
-                },function(data){
+                },null,function(data){
                     login_fail();
                 })
             })
@@ -77,6 +77,20 @@
                     window.location.reload();
                 },1000);
             })
+        },
+        addSongToSonglist:function(songId,songlistId){
+            dao.addSongToSonglist(songId,songlistId).done(function(data){
+                Base.processData(data,function(data){
+                    Alert.success(data.message);
+                })
+            });
+        },
+        toggleSongFromLovelist:function(songId){
+            dao.toggleSongFromLovelist(songId).done(function(data){
+                Base.processData(data,function(data){
+                    Alert.success(data.message);
+                })
+            });
         }
 
     };

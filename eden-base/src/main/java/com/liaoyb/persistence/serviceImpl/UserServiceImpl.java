@@ -1,14 +1,19 @@
 package com.liaoyb.persistence.serviceImpl;
 
 import com.liaoyb.base.SysCode;
+import com.liaoyb.base.annotation.AuthPassport;
 import com.liaoyb.base.annotation.PageAnnotation;
 import com.liaoyb.base.domain.Page;
+import com.liaoyb.base.support.utils.CollectionUtil;
 import com.liaoyb.persistence.dao.base.*;
 import com.liaoyb.persistence.dao.custom.SongMapperCustom;
+import com.liaoyb.persistence.dao.custom.SonglistMapperCustom;
 import com.liaoyb.persistence.dao.custom.UserMapperCustom;
 import com.liaoyb.persistence.domain.dto.*;
 import com.liaoyb.persistence.domain.vo.base.*;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
+import com.liaoyb.persistence.service.SongService;
+import com.liaoyb.persistence.service.SonglistService;
 import com.liaoyb.persistence.service.UserService;
 import com.liaoyb.util.MD5Util;
 import com.liaoyb.util.UUIDUtil;
@@ -51,6 +56,18 @@ public class UserServiceImpl implements UserService {
     private UserMapperCustom userMapperCustom;
     @Autowired
     private SonglistMapper songlistMapper;
+
+    @Autowired
+    private SonglistMapperCustom songlistMapperCustom;
+
+    @Autowired
+    private SongService songService;
+
+    @Autowired
+    private SonglistService songlistService;
+
+    @Autowired
+    private SonglistWithSongMapper songlistWithSongMapper;
 
 
     @Override
@@ -443,4 +460,119 @@ public class UserServiceImpl implements UserService {
         page.setResult(userMapperCustom.findUser(searchText));
         return page;
     }
+
+    /**
+     * 添加歌曲到歌单
+     *
+     * @param songlistId
+     * @param songId
+     * @return
+     */
+    @Override
+    @Transactional
+    public Response addSongToSonglist(Long userId,Long songlistId, Long songId) {
+
+        //歌单是否存在且有效且自己创建的
+        if(!canAddSongToSonglist(userId,songlistId)){
+            return new Response().failure("歌单无效");
+        }
+        if(!songService.isValid(songId)){
+            return new Response().failure("歌曲无效");
+        }
+        //歌曲是否已经存在歌单中
+        if(songlistService.isSongInSonglist(songId,songlistId)){
+            return new Response().failure("歌单中已存在此歌曲");
+        }
+
+
+        //添加
+        SonglistWithSong songlistWithSong=new SonglistWithSong();
+        songlistWithSong.setSongId(songId);
+        songlistWithSong.setSonglistId(songlistId);
+        songlistWithSongMapper.insertSelective(songlistWithSong);
+
+        //更新歌曲的收藏量
+        songMapperCustom.addOneSongCollectCount(songId);
+        return new  Response().success("成功添加到歌单",null);
+    }
+
+    /**
+     * 歌单是否能添加歌曲
+     *
+     * @param userId
+     * @param songlistId
+     * @return
+     */
+    @Override
+    public boolean canAddSongToSonglist(Long userId, Long songlistId) {
+        //歌单是否存在且有效且自己创建的
+        Songlist codition=new Songlist();
+        codition.setId(songlistId);
+        codition.setFlag(1L);
+        codition.setUserId(userId);
+        List<Songlist>songlists=songlistMapperCustom.findsonglistQuery(codition);
+        if(songlists.size()==1){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * toggle歌曲从我喜欢歌单中
+     *
+     * @param userId
+     * @param songId
+     * @return
+     */
+    @Override
+    @Transactional
+    public Response toggleSongFromLovelist(Long userId, Long songId) {
+        //用户我喜欢歌单
+        Songlist songlistLove=findMyLoveSonglist(userId);
+        if(songlistLove==null){
+            return new Response().failure("默认歌单不存在");
+        }
+        Long songlistId=songlistLove.getId();
+        //如果存在，就移除
+        if(songlistService.isSongInSonglist(songId,songlistId)){
+            SonglistWithSongExample songlistWithSongExample=new SonglistWithSongExample();
+            SonglistWithSongExample.Criteria criteria=songlistWithSongExample.createCriteria();
+            criteria.andSongIdEqualTo(songId);
+            criteria.andSonglistIdEqualTo(songlistId);
+
+            songlistWithSongMapper.deleteByExample(songlistWithSongExample);
+            return new Response().success("已从【我喜欢】中移除",null);
+        }else{
+            SonglistWithSong songlistWithSong=new SonglistWithSong();
+            songlistWithSong.setSongId(songId);
+            songlistWithSong.setSonglistId(songlistId);
+            songlistWithSongMapper.insertSelective(songlistWithSong);
+
+            //更新歌曲的收藏量
+            songMapperCustom.addOneSongCollectCount(songId);
+            return new Response().success("已添加到【我喜欢】",null);
+        }
+
+    }
+
+    /**
+     * 用户的我喜欢歌单（默认歌单）
+     *
+     * @param userId
+     * @return
+     */
+    @Override
+    public Songlist findMyLoveSonglist(Long userId) {
+        SonglistExample songlistExample=new SonglistExample();
+        SonglistExample.Criteria criteria=songlistExample.createCriteria();
+        criteria.andUserIdEqualTo(userId);
+        criteria.andListNameEqualTo(SysCode.MUSIC_LIST.DEFAULT_LOVE);
+        List<Songlist>songlists=songlistMapper.selectByExample(songlistExample);
+        if(!CollectionUtil.isNotEmpty(songlists)){
+            return null;
+        }
+        return songlists.get(0);
+    }
+
+
 }

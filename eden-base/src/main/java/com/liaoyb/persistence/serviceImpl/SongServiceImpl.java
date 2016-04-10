@@ -7,7 +7,9 @@ import com.liaoyb.persistence.dao.base.SongMapper;
 import com.liaoyb.persistence.dao.base.UserlistenMapper;
 import com.liaoyb.persistence.dao.custom.SongMapperCustom;
 import com.liaoyb.persistence.dao.custom.UserlistenMapperCustom;
+import com.liaoyb.persistence.domain.dto.SongDto;
 import com.liaoyb.persistence.domain.vo.base.Song;
+import com.liaoyb.persistence.domain.vo.base.SongExample;
 import com.liaoyb.persistence.domain.vo.base.Userlisten;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
 import com.liaoyb.persistence.service.SongService;
@@ -244,6 +246,40 @@ public class SongServiceImpl implements SongService {
     @PageAnnotation
     public Page<SongCustom> findSong(Page<SongCustom> page, Integer type, String searchText) {
         page.setResult(songMapperCustom.findSong(type,searchText));
+        return page;
+    }
+
+    /**
+     * 歌曲是否有效
+     *
+     * @param songId
+     * @return
+     */
+    @Override
+    public boolean isValid(Long songId) {
+        SongExample songExample=new SongExample();
+        SongExample.Criteria criteria=songExample.createCriteria();
+        criteria.andIdEqualTo(songId);
+        criteria.andFlagEqualTo(1L);
+        List<Song>songs=songMapper.selectByExample(songExample);
+        if(songs.size()==1){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 随机
+     *
+     * @param page
+     * @param userId
+     * @param type
+     * @return
+     */
+    @Override
+    @PageAnnotation
+    public Page<SongDto> findSongDtoRandom(Page<SongDto> page, Long userId, Long type) {
+        page.setResult(songMapperCustom.findSongDtoRandom(userId,type));
         return page;
     }
 }

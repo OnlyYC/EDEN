@@ -1,6 +1,7 @@
 package com.liaoyb.persistence.service;
 
 import com.liaoyb.base.domain.Page;
+import com.liaoyb.persistence.domain.dto.SongDto;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
 
 /**
@@ -137,4 +138,21 @@ public interface SongService {
      * @return
      */
     Page<SongCustom> findSong(Page<SongCustom> page,Integer type,String searchText);
+
+
+    /**
+     * 歌曲是否有效
+     * @param songId
+     * @return
+     */
+    boolean isValid(Long songId);
+
+    /**
+     * 随机
+     * @param page
+     * @param userId
+     * @param type
+     * @return
+     */
+    Page<SongDto> findSongDtoRandom(Page<SongDto> page, Long userId, Long type);
 }

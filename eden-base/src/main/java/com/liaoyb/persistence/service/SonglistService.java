@@ -131,4 +131,12 @@ public interface SonglistService {
      * @return
      */
     Page<SonglistCountDto> findSonglist(Page<SonglistCountDto> page, String searchText);
+
+    /**
+     * 歌曲是否在歌单中存在
+     * @param songId
+     * @param songlistId
+     * @return
+     */
+    boolean isSongInSonglist(Long songId,Long songlistId);
 }

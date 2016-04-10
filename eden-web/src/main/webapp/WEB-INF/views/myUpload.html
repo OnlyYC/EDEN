@@ -308,7 +308,6 @@
                                 "ordering": false,
                                 "columns": [
                                     {
-                                        "orderable": false,
                                         "data": null,
                                         "render": function (data, type, full, meta) {
                                             //console.info(meta.settings);
@@ -337,7 +336,6 @@
                                     },
                                     {
                                         "data": "title",
-                                        "orderable": false,
                                         "render": function (data, type, full, meta) {
                                             var ogin = "<a href='/song/"+full.song_id+"' data-bjax>" + data + "</a>";
                                             if (full.mvId) {

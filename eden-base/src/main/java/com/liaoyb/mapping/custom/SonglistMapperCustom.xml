@@ -52,6 +52,12 @@
                 <if test="condition.listName!=null">
                     and listName like CONCAT(CONCAT('%',#{condition.listName}),'%')
                 </if>
+                <if test="condition.userId!=null">
+                    and userId=#{condition.userId}
+                </if>
+                <if test="condition.flag!=null">
+                    and flag=#{condition.flag}
+                </if>
             </if>
         </where>
     </select>

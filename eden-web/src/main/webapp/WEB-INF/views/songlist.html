@@ -340,12 +340,12 @@
                                         "render": function (data, type, full, meta) {
                                             var result = '';
                                             if (full.like) {
-                                                result += '<span class="active"  data-toggle="toggle">' +
+                                                result += '<span class="active toggleFromMyLovelist" data-song_id=\"'+full.song_id+'\"  data-toggle="toggle">' +
                                                         '<i class="fa fa-heart-o  text "></i>' +
                                                         '<i class="fa fa-heart  text-active  text-danger"></i>' +
                                                         '</span>';
                                             } else {
-                                                result += '<span class="active"  data-toggle="toggle">' +
+                                                result += '<span class="active toggleFromMyLovelist" data-song_id=\"'+full.song_id+'\"   data-toggle="toggle">' +
                                                         '<i class="fa fa-heart-o text-active   "></i>' +
                                                         '<i class="fa fa-heart text  text-danger"></i>' +
                                                         '</span>';

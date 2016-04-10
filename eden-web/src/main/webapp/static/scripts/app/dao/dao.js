@@ -88,6 +88,24 @@
         });
     };
 
+    //添加歌曲到歌单
+    var addSongToSonglist=function(songId,songlistId){
+        var data={
+            songId:songId,
+            songlistId:songlistId
+        };
+        return utils.post(baseUrl+'/api/user/addSongToSonglist',data,function(data){
+            return data;
+        })
+    };
+    var toggleSongFromLovelist=function(songId){
+        var data={
+            songId:songId,
+        };
+        return utils.post(baseUrl+'/api/user/toggleSongFromLovelist',data,function(data){
+            return data;
+        })
+    };
 
 
 
@@ -102,7 +120,9 @@
         addSongsToUserPlaylist:addSongsToUserPlaylist,
         register:register,
         login:login,
-        logout:logout
+        logout:logout,
+        addSongToSonglist:addSongToSonglist,
+        toggleSongFromLovelist:toggleSongFromLovelist
     }
 
 

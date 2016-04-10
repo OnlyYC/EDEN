@@ -360,7 +360,7 @@ Modernizr.addTest('ios7 ipad', function () {
                 that.$backdrop.remove();
                 Base.processData(r,function(data){
 
-                },function(data){
+                },null,function(data){
                     console.info("fail");
                     Alert.error(data.message);
                 });
@@ -1203,6 +1203,41 @@ Date.now = Date.now || function () {
 
 
 
+    //添加到歌单模板框中每一项歌单
+    $("body").delegate(".add_song_to_songlist","click",function(){
+        //把歌曲添加歌单
+        var songlistId=$(this).data("listid");
+        if(song_that_i_want_to_songlist){
+            server.user.addSongToSonglist(song_that_i_want_to_songlist,songlistId);
+        }
+        //关闭模态框
+        $('#mysonglist_modal').modal("hide");
+
+
+    });
+
+    //打开新建歌单对话框
+    $("body").delegate(".newsonglist","click",function(){
+        //
+
+    });
+
+    //按钮点击，显示添加到对话框
+    $("body").delegate(".addToSonglist","click",function(){
+        var songId=$(this).data('song_id');
+        showAddToSonglist(songId);
+
+    });
+
+    //红心按钮,toggleSongMyLovelist
+    $("body").delegate(".toggleFromMyLovelist","click",function(){
+        var songId=$(this).data('song_id');
+        toggleSongMyLovelist(songId);
+
+    });
+
+
+
 }(jQuery);
 
 
@@ -1227,4 +1262,37 @@ function mysearch(){
         });
     }
 
+}
+
+var song_that_i_want_to_songlist;
+//显示添加到歌单对话框
+function showAddToSonglist(songId){
+    song_that_i_want_to_songlist=songId;
+    //加载歌单数据，渲染.不是第一次的话，就刷新数据
+    var data=$("#mysonglist_modal").data("jtemplatePag");
+    if(!data){
+        $("#mysonglist_modal").jtemplatePag({
+            template_url: baseUrl+"/static/templates/modal_add_songTosonglist.html",
+            data_url: baseUrl+"/api/user/findMySonglist",
+            dataType:2,
+            isNeedPage:false,
+            failCallBack:function(){
+                $('#mysonglist_modal').modal("hide");
+            }
+
+        });
+    }else{
+        $("#mysonglist_modal").jtemplatePag('refresh');
+    }
+
+
+
+    //显示模态框
+    $('#mysonglist_modal').modal("show");
+}
+
+
+//我喜欢歌单,如果原来在里面就移除，如果原来没有就添加
+function toggleSongMyLovelist(songId){
+    server.user.toggleSongFromLovelist(songId);
 }

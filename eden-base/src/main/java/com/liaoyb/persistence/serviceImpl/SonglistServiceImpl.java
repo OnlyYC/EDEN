@@ -4,12 +4,15 @@ import com.liaoyb.base.SysCode;
 import com.liaoyb.base.annotation.PageAnnotation;
 import com.liaoyb.base.domain.Page;
 import com.liaoyb.persistence.dao.base.SonglistMapper;
+import com.liaoyb.persistence.dao.base.SonglistWithSongMapper;
 import com.liaoyb.persistence.dao.custom.SongMapperCustom;
 import com.liaoyb.persistence.dao.custom.SonglistMapperCustom;
 import com.liaoyb.persistence.domain.dto.SongDto;
 import com.liaoyb.persistence.domain.dto.SonglistCountDto;
 import com.liaoyb.persistence.domain.dto.SonglistDto;
 import com.liaoyb.persistence.domain.vo.base.Songlist;
+import com.liaoyb.persistence.domain.vo.base.SonglistWithSong;
+import com.liaoyb.persistence.domain.vo.base.SonglistWithSongExample;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
 import com.liaoyb.persistence.service.SonglistService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +36,9 @@ public class SonglistServiceImpl implements SonglistService {
     private SonglistMapperCustom songlistMapperCustom;
     @Autowired
     private SonglistMapper songlistMapper;
+
+    @Autowired
+    private SonglistWithSongMapper songlistWithSongMapper;
 
     /**
      * 歌单dto
@@ -206,5 +212,25 @@ public class SonglistServiceImpl implements SonglistService {
     public Page<SonglistCountDto> findSonglist(Page<SonglistCountDto> page, String searchText) {
         page.setResult(songlistMapperCustom.findSonglist(searchText));
         return page;
+    }
+
+    /**
+     * 歌曲是否在歌单中存在
+     *
+     * @param songId
+     * @param songlistId
+     * @return
+     */
+    @Override
+    public boolean isSongInSonglist(Long songId, Long songlistId) {
+        SonglistWithSongExample songlistWithSongExample=new SonglistWithSongExample();
+        SonglistWithSongExample.Criteria criteria=songlistWithSongExample.createCriteria();
+        criteria.andSongIdEqualTo(songId);
+        criteria.andSonglistIdEqualTo(songlistId);
+        List<SonglistWithSong>songlistWithSongs=songlistWithSongMapper.selectByExample(songlistWithSongExample);
+        if(songlistWithSongs.size()==1){
+            return true;
+        }
+        return false;
     }
 }
