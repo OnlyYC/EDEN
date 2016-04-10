@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
      * @param userId
      * @return
      */
-    public User findUser(Long userId){
+    public User findUserById(Long userId){
         return userMapper.selectByPrimaryKey(userId);
     }
 
@@ -428,5 +428,19 @@ public class UserServiceImpl implements UserService {
         }
 
 
+    }
+
+    /**
+     * 搜索用户
+     *
+     * @param page
+     * @param searchText
+     * @return
+     */
+    @Override
+    @PageAnnotation
+    public Page<User> findUser(Page<User> page, String searchText) {
+        page.setResult(userMapperCustom.findUser(searchText));
+        return page;
     }
 }

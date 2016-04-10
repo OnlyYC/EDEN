@@ -2,6 +2,7 @@ package com.liaoyb.persistence.service;
 
 import com.liaoyb.base.domain.Page;
 import com.liaoyb.persistence.domain.dto.SongDto;
+import com.liaoyb.persistence.domain.dto.SonglistCountDto;
 import com.liaoyb.persistence.domain.dto.SonglistDto;
 import com.liaoyb.persistence.domain.vo.base.Songlist;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
@@ -123,4 +124,11 @@ public interface SonglistService {
     public boolean updateSonglist(Songlist songlist);
 
 
+    /**
+     * 歌单搜索
+     * @param page
+     * @param searchText
+     * @return
+     */
+    Page<SonglistCountDto> findSonglist(Page<SonglistCountDto> page, String searchText);
 }

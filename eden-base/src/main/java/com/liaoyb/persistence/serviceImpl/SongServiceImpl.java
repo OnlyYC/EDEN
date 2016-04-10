@@ -230,4 +230,20 @@ public class SongServiceImpl implements SongService {
 
 
     }
+
+    /**
+     * 歌曲搜索
+     * 区分歌曲、mv
+     *
+     * @param page
+     * @param type       歌曲类型,1-歌曲，2-mv
+     * @param searchText
+     * @return
+     */
+    @Override
+    @PageAnnotation
+    public Page<SongCustom> findSong(Page<SongCustom> page, Integer type, String searchText) {
+        page.setResult(songMapperCustom.findSong(type,searchText));
+        return page;
+    }
 }

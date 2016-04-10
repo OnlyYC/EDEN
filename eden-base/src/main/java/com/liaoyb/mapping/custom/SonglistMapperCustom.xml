@@ -80,6 +80,24 @@
        order by(select sum( ifnull((select s_l.ratio from songlist_with_tag s_l where s_l.songlistId=sl.id and s_l.tagId=ta.id),0)*ifnull((select u_p.factor from user_prefer u_p where u_p.userId=#{userId}  and u_p.tagId=ta.id),0)) from tag ta) desc
     </select>
 
+    <!--歌单搜索,不显示我喜欢歌单-->
+    <select id="findSonglist" resultType="com.liaoyb.persistence.domain.dto.SonglistCountDto">
+        SELECT sli.*,
+        COUNT(s_w_s.id) songCount
+         from
+         (
+         SELECT sl.* FROM
+         songlist sl
+         WHERE sl.flag=1
+         AND sl.listName!='我喜欢'
+         AND (
+         sl.listName like CONCAT(CONCAT('%',#{searchText}),'%')
+         OR sl.info like CONCAT(CONCAT('%',#{searchText}),'%')
+         )
+         )sli
+          LEFT JOIN songlist_with_song s_w_s ON sli.id=s_w_s.songlistId
+         GROUP BY sli.id
+    </select>
 
 
 </mapper>

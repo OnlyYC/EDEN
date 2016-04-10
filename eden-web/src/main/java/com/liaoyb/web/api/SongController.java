@@ -170,6 +170,20 @@ public class SongController {
     }
 
 
+    /**
+     * 歌曲搜索,分页
+     * @param request
+     * @param response
+     * @param searchText
+     * @param page
+     */
+    @RequestMapping("/findSong")
+    public void findSong(HttpServletRequest request,HttpServletResponse response,Page<SongCustom>page,Integer type,String searchText){
+        page=songService.findSong(page,type,searchText);
+        MyResultUtil.sendPage(response,page);
+    }
+
+
 
 
 

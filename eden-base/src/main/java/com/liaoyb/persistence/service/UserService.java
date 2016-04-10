@@ -27,7 +27,7 @@ public interface UserService {
      * @param userId
      * @return
      */
-    public User findUser(Long userId);
+    public User findUserById(Long userId);
     /**
      * 用户详细信息
      * @param userId
@@ -204,15 +204,11 @@ public interface UserService {
     public void addSonglistToUserPlay(Long userId, Long songlistId);
 
 
-
-
-
-
-
-
-
-
-
-
-
+    /**
+     * 搜索用户
+     * @param page
+     * @param searchText
+     * @return
+     */
+    Page<User> findUser(Page<User> page, String searchText);
 }

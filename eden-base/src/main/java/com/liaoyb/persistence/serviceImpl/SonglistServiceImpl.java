@@ -7,6 +7,7 @@ import com.liaoyb.persistence.dao.base.SonglistMapper;
 import com.liaoyb.persistence.dao.custom.SongMapperCustom;
 import com.liaoyb.persistence.dao.custom.SonglistMapperCustom;
 import com.liaoyb.persistence.domain.dto.SongDto;
+import com.liaoyb.persistence.domain.dto.SonglistCountDto;
 import com.liaoyb.persistence.domain.dto.SonglistDto;
 import com.liaoyb.persistence.domain.vo.base.Songlist;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
@@ -191,5 +192,19 @@ public class SonglistServiceImpl implements SonglistService {
         songlist.setLastUpdate(new Date().getTime());
         songlistMapper.updateByPrimaryKeySelective(songlist);
         return true;
+    }
+
+    /**
+     * 歌单搜索
+     *
+     * @param page
+     * @param searchText
+     * @return
+     */
+    @Override
+    @PageAnnotation
+    public Page<SonglistCountDto> findSonglist(Page<SonglistCountDto> page, String searchText) {
+        page.setResult(songlistMapperCustom.findSonglist(searchText));
+        return page;
     }
 }

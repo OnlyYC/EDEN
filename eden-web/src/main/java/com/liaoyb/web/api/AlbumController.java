@@ -50,4 +50,18 @@ public class AlbumController {
         MyResultUtil.sendPage(response,page);
     }
 
+
+    /**
+     * 专辑搜索
+     * @param request
+     * @param response
+     * @param page
+     * @param searchText
+     */
+    @RequestMapping("/findAlbum")
+    public void findAlbum(HttpServletRequest request, HttpServletResponse response, Page<Album> page,String searchText){
+        page=albumService.findAlbum(page,searchText);
+        MyResultUtil.sendPage(response,page);
+    }
+
 }

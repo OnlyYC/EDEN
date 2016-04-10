@@ -36,4 +36,12 @@ public interface AlbumService {
      * @return
      */
     List<SongCustom>findSongCustomInAlbum(Long albumId);
+
+    /**
+     * 专辑搜索
+     * @param page
+     * @param searchText
+     * @return
+     */
+    Page<Album> findAlbum(Page<Album> page, String searchText);
 }

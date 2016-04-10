@@ -139,4 +139,12 @@ public interface SongMapperCustom {
     List<SongCustom> findSongCustomsRandom(@Param("type") Long type);
 
 
+    /**
+     * 搜索歌曲
+     * 区分歌曲、mv
+     * @param type
+     * @param searchText
+     * @return
+     */
+    public List<SongCustom> findSong(@Param("type") Integer type,@Param("searchText") String searchText);
 }

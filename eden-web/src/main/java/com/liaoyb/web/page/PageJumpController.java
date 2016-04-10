@@ -18,7 +18,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -208,7 +207,7 @@ public class PageJumpController {
      */
     @RequestMapping("/userFocus/{userId}")
     public String userFocus(Map map,HttpServletRequest request,@PathVariable Long userId) throws SourcesNotFoundException {
-        User user=userService.findUser(userId);
+        User user=userService.findUserById(userId);
         if(user==null){
             throw new SourcesNotFoundException();
         }
@@ -226,7 +225,7 @@ public class PageJumpController {
      */
     @RequestMapping("/userFans/{userId}")
     public String userFans(Map map,HttpServletRequest request,@PathVariable Long userId) throws SourcesNotFoundException {
-        User user=userService.findUser(userId);
+        User user=userService.findUserById(userId);
         if(user==null){
             throw new SourcesNotFoundException();
         }
@@ -267,13 +266,26 @@ public class PageJumpController {
     public String dynamic(Map map, @PathVariable Long userId)throws SourcesNotFoundException{
 
         //用户
-        User user=userService.findUser(userId);
+        User user=userService.findUserById(userId);
         if(user==null){
             throw new SourcesNotFoundException();
         }
         map.put("user",user);
 
         return "dynamic";
+    }
+
+
+    /**
+     * 搜索结果
+     * @param map
+     * @param s
+     * @return
+     */
+    @RequestMapping("/search")
+    public String search(Map map, String s){
+        map.put("searchText",s);
+        return "search";
     }
 
 

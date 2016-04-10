@@ -3,6 +3,7 @@ package com.liaoyb.web.api;
 import com.liaoyb.base.domain.Page;
 import com.liaoyb.persistence.domain.dto.SongDto;
 import com.liaoyb.persistence.domain.dto.SongOfList;
+import com.liaoyb.persistence.domain.dto.SonglistCountDto;
 import com.liaoyb.persistence.domain.vo.base.Songlist;
 import com.liaoyb.persistence.domain.vo.base.User;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
@@ -115,7 +116,6 @@ public class SonglistContoller {
      * @param page
      */
     @RequestMapping("/findSongCustomsBySongType")
-//    @ResponseBody
     public void findSongCustomsBySongType(HttpServletResponse response, Page<Songlist>page, @RequestParam(value = "typeId[]",required = false)Long[] typeId){
         //数组转为集合
 
@@ -127,5 +127,18 @@ public class SonglistContoller {
         MyResultUtil.sendPage(response,page);
     }
 
+
+    /**
+     * 歌单搜索
+     * @param request
+     * @param response
+     * @param page
+     * @param searchText
+     */
+    @RequestMapping("/findSonglist")
+    public void findSonglist(HttpServletRequest request, HttpServletResponse response, Page<SonglistCountDto>page,String searchText){
+        page=songlistService.findSonglist(page,searchText);
+        MyResultUtil.sendPage(response,page);
+    }
 
 }

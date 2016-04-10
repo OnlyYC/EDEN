@@ -128,6 +128,13 @@ public interface SongService {
     public void playSong(Long userId, Long songId);
 
 
-
-
+    /**
+     * 歌曲搜索
+     * 区分歌曲、mv
+     * @param page
+     * @param type 歌曲类型,1-歌曲，2-mv
+     * @param searchText
+     * @return
+     */
+    Page<SongCustom> findSong(Page<SongCustom> page,Integer type,String searchText);
 }

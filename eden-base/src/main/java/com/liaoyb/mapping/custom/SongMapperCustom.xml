@@ -238,4 +238,21 @@
     </select>
 
 
+    <!--搜索歌曲,区分歌曲、mv-->
+    <select id="findSong" resultMap="SongCustom_ResultMap">
+        <include refid="songCustom_Base_Sql"/>
+        <where>
+            AND s.flag=1
+            <if test="type!=null">
+                AND s.type=#{type}
+            </if>
+
+            AND(s.name LIKE CONCAT(CONCAT('%',#{searchText}),'%')
+            OR s.albumName LIKE CONCAT(CONCAT('%',#{searchText}),'%')
+            OR s.info LIKE CONCAT(CONCAT('%',#{searchText}),'%')
+            )
+        </where>
+    </select>
+
+
 </mapper>

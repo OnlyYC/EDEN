@@ -3,11 +3,13 @@ package com.liaoyb.persistence.serviceImpl;
 import com.liaoyb.base.annotation.PageAnnotation;
 import com.liaoyb.base.domain.Page;
 import com.liaoyb.persistence.dao.base.AlbumMapper;
+import com.liaoyb.persistence.dao.custom.AlbumMapperCustom;
 import com.liaoyb.persistence.dao.custom.SongMapperCustom;
 import com.liaoyb.persistence.domain.dto.SongDto;
 import com.liaoyb.persistence.domain.vo.base.Album;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
 import com.liaoyb.persistence.service.AlbumService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,9 @@ public class AlbumServiceImpl implements AlbumService{
     private AlbumMapper albumMapper;
     @Autowired
     private SongMapperCustom songMapperCustom;
+
+    @Autowired
+    private AlbumMapperCustom albumMapperCustom;
 
     /**
      * 通过id找到专辑
@@ -59,6 +64,20 @@ public class AlbumServiceImpl implements AlbumService{
     @Override
     public List<SongCustom> findSongCustomInAlbum(Long albumId) {
         return songMapperCustom.findSongCustomsInAlbum(albumId);
+    }
+
+    /**
+     * 专辑搜索
+     *
+     * @param page
+     * @param searchText
+     * @return
+     */
+    @Override
+    @PageAnnotation
+    public Page<Album> findAlbum(Page<Album> page, String searchText) {
+        page.setResult(albumMapperCustom.findAlbum(searchText));
+        return page;
     }
 
 

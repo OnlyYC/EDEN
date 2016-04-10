@@ -43,4 +43,10 @@ public interface ArtistMapperCustom {
      */
     List<SongCustom> findMvBelongToArtist(@Param("artistId") Long artistId, @Param("type") Long type);
 
+    /**
+     * 歌手搜索
+     * @param searchText
+     * @return
+     */
+    List<ArtistDto> findArtist(@Param("searchText") String searchText);
 }

@@ -175,7 +175,34 @@
 
 
 
+    <profiles>
+        <profile>
+            <!-- 开发使用 -->
+            <id>development</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <env>dev</env>
+            </properties>
+        </profile>
+        <profile>
+            <!-- 测试环境使用 -->
+            <id>test</id>
+            <properties>
+                <env>test</env>
+            </properties>
+        </profile>
+        <profile>
+            <!-- 生产环境使用 -->
+            <id>product</id>
+            <properties>
+                <env>product</env>
+            </properties>
+        </profile>
 
+
+    </profiles>
 
     <!--构建-->
 
@@ -241,33 +268,6 @@
 
 
 
-    <profiles>
-        <profile>
-            <!-- 开发使用 -->
-            <id>development</id>
-            <activation>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <env>dev</env>
-            </properties>
-        </profile>
-        <profile>
-            <!-- 测试环境使用 -->
-            <id>test</id>
-            <properties>
-                <env>test</env>
-            </properties>
-        </profile>
-        <profile>
-            <!-- 生产环境使用 -->
-            <id>product</id>
-            <properties>
-                <env>product</env>
-            </properties>
-        </profile>
 
-
-    </profiles>
 
 </project>

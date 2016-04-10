@@ -279,6 +279,20 @@ public class UserController {
     }
 
 
+    /**
+     * 搜索用户
+     * @param request
+     * @param response
+     * @param page
+     * @param searchText
+     */
+    @RequestMapping("/findUser")
+    public void findUser(HttpServletRequest request,HttpServletResponse response,Page<User>page,String searchText){
+        page=userService.findUser(page,searchText);
+        MyResultUtil.sendPage(response,page);
+    }
+
+
 
 
 

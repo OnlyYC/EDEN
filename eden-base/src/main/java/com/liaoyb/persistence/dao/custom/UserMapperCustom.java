@@ -142,4 +142,10 @@ public interface UserMapperCustom {
     List<UserPlay> findUsersLikeThisSong(Long songId);
 
 
+    /**
+     * 搜索用户
+     * @param searchText
+     * @return
+     */
+    List<User> findUser(String searchText);
 }

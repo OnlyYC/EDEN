@@ -348,7 +348,7 @@
 
                                     var my_artist=$('#my_artist').DataTable();
                                     //每一行 点击事件
-                                    $('#my_artist tbody').delegate('tr','click',function(){
+                                    $('#my_artist tbody').click( function () {
 
 
                                         var curRow=my_artist.row($(this));

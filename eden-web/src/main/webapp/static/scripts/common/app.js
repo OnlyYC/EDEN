@@ -342,13 +342,18 @@ Modernizr.addTest('ios7 ipad', function () {
         replace:true,
         target:'#parContainer',
         el:'#content',
-        pushState:true
+        pushState:true,
+        parameter:{}
     };
 
     Bjax.prototype.start = function () {
         var that = this;
         this.backdrop();
-        $.ajax(this.options.url).done(function (r) {
+        $.ajax({
+            url:this.options.url,
+            data:this.options.parameters
+        }
+        ).done(function (r) {
             that.$content = r;
             //先根据返回的信息，是到目标页面还是给出提示信息
             if(typeof(r.flag) != "undefined"&&!r.flag){
@@ -1185,4 +1190,41 @@ Date.now = Date.now || function () {
         $("[data-toggle=show]").myshow(true);
     });
 
+
+    $('#search').bind('keypress',function(event){
+        if(event.keyCode == "13")
+        {
+            mysearch();
+        }
+    });
+    $("#search_btn").click(function(){
+        mysearch();
+    });
+
+
+
 }(jQuery);
+
+
+//搜索
+function mysearch(){
+    var search=$('#search').val();
+
+    //当前页面
+    var url=window.location.href;
+    var lastUrl=url.substring(url.lastIndexOf("/")+1);
+    if(lastUrl.indexOf("search")==0){
+        searchText=search;
+        //当前是search页面
+        refresh_search_result();
+    }else{
+        //跳转到search页面
+        //进行url编码
+        search=encodeURIComponent(search);
+        var searchUrl=baseUrl+'/search?s='+search;
+        $(this).bjax({
+            url: searchUrl
+        });
+    }
+
+}

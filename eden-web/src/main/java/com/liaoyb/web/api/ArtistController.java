@@ -68,11 +68,31 @@ public class ArtistController {
         MyResultUtil.sendPage(response,page);
     }
 
-    //歌手搜索
+
+    /**
+     * 歌手条件搜索
+     * @param response
+     * @param page
+     * @param artist
+     */
     @RequestMapping("/searchArtist")
     public void searchArtist(HttpServletResponse response, Page<Artist>page, Artist artist){
 
         page=artistService.artistsQuery(page,artist);
+        MyResultUtil.sendPage(response,page);
+    }
+
+
+    /**
+     * 总搜索页面
+     * 歌手搜索
+     * @param response
+     * @param page
+     * @param searchText
+     */
+    @RequestMapping("/findArtist")
+    public void findArtist(HttpServletResponse response, Page<ArtistDto>page, String searchText){
+        page=artistService.findArtist(page,searchText);
         MyResultUtil.sendPage(response,page);
     }
 

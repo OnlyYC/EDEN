@@ -1,5 +1,6 @@
 package com.liaoyb.persistence.dao.custom;
 
+import com.liaoyb.persistence.domain.dto.SonglistCountDto;
 import com.liaoyb.persistence.domain.dto.SonglistDto;
 import com.liaoyb.persistence.domain.vo.base.Songlist;
 import com.liaoyb.persistence.domain.vo.base.Tag;
@@ -55,8 +56,10 @@ public interface SonglistMapperCustom {
     List<Songlist>findsonglistQuery(@Param("condition") Songlist condition);
 
 
-
-
-
-
+    /**
+     * 歌单搜索
+     * @param searchText
+     * @return
+     */
+    List<SonglistCountDto> findSonglist(String searchText);
 }

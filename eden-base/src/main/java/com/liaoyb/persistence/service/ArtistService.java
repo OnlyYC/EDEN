@@ -80,9 +80,11 @@ public interface ArtistService {
     Page<SongCustom>findAllSongCustomsBelontToArtist(Page<SongCustom> page, Long artistId);
 
 
-
-
-
-
-
+    /**
+     * 歌手搜索
+     * @param page
+     * @param searchText
+     * @return
+     */
+    Page<ArtistDto> findArtist(Page<ArtistDto> page, String searchText);
 }

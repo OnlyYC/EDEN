@@ -1,6 +1,7 @@
 package com.liaoyb.persistence.serviceImpl;
 
 import com.liaoyb.base.SysCode;
+import com.liaoyb.base.annotation.PageAnnotation;
 import com.liaoyb.base.domain.Page;
 import com.liaoyb.persistence.dao.base.ArtistMapper;
 import com.liaoyb.persistence.dao.custom.ArtistMapperCustom;
@@ -109,6 +110,20 @@ public class ArtistServiceImpl implements ArtistService {
     public Page<SongCustom> findAllSongCustomsBelontToArtist(Page<SongCustom> page, Long artistId) {
         List<SongCustom>songCustoms=artistMapperCustom.findMvBelongToArtist(artistId, SysCode.SONG_TYPE.SONG);
         page.setResult(songCustoms);
+        return page;
+    }
+
+    /**
+     * 歌手搜索
+     *
+     * @param page
+     * @param searchText
+     * @return
+     */
+    @Override
+    @PageAnnotation
+    public Page<ArtistDto> findArtist(Page<ArtistDto> page, String searchText) {
+        page.setResult(artistMapperCustom.findArtist(searchText));
         return page;
     }
 }

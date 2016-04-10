@@ -78,5 +78,15 @@
          from artist a left join zd zd1 on (a.sex=zd1.code and zd1.type='sex' ) left join zd zd2 on(a.country=zd2.code and zd2.type='country') where a.id=#{artistId}
     </select>
 
+    <!--歌手搜索-->
+    <select id="findArtist" resultType="com.liaoyb.persistence.domain.dto.ArtistDto">
+
+        <include refid="ArtistDto_Sql"/>
+         WHERE
+        a.name like CONCAT(CONCAT('%',#{searchText}),'%')
+        OR a.info like CONCAT(CONCAT('%',#{searchText}),'%')
+        OR a.member like CONCAT(CONCAT('%',#{searchText}),'%')
+    </select>
+
 
 </mapper>
