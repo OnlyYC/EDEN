@@ -98,15 +98,26 @@
             return data;
         })
     };
+
+    //添加到我喜欢
     var toggleSongFromLovelist=function(songId){
         var data={
-            songId:songId,
+            songId:songId
         };
         return utils.post(baseUrl+'/api/user/toggleSongFromLovelist',data,function(data){
             return data;
         })
     };
 
+    //新建歌单
+    var newSonglist=function(listName){
+        var data={
+            listName:listName
+        };
+        return utils.post(baseUrl+'/api/songlist/newSonglist',data,function(data){
+            return data;
+        });
+    };
 
 
 
@@ -122,7 +133,9 @@
         login:login,
         logout:logout,
         addSongToSonglist:addSongToSonglist,
-        toggleSongFromLovelist:toggleSongFromLovelist
+        toggleSongFromLovelist:toggleSongFromLovelist,
+        newSonglist:newSonglist
+
     }
 
 

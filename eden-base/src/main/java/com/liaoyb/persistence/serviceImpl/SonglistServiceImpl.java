@@ -5,18 +5,22 @@ import com.liaoyb.base.annotation.PageAnnotation;
 import com.liaoyb.base.domain.Page;
 import com.liaoyb.persistence.dao.base.SonglistMapper;
 import com.liaoyb.persistence.dao.base.SonglistWithSongMapper;
+import com.liaoyb.persistence.dao.base.UserMapper;
 import com.liaoyb.persistence.dao.custom.SongMapperCustom;
 import com.liaoyb.persistence.dao.custom.SonglistMapperCustom;
+import com.liaoyb.persistence.domain.dto.Response;
 import com.liaoyb.persistence.domain.dto.SongDto;
 import com.liaoyb.persistence.domain.dto.SonglistCountDto;
 import com.liaoyb.persistence.domain.dto.SonglistDto;
 import com.liaoyb.persistence.domain.vo.base.Songlist;
 import com.liaoyb.persistence.domain.vo.base.SonglistWithSong;
 import com.liaoyb.persistence.domain.vo.base.SonglistWithSongExample;
+import com.liaoyb.persistence.domain.vo.base.User;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
 import com.liaoyb.persistence.service.SonglistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.Date;
@@ -39,6 +43,10 @@ public class SonglistServiceImpl implements SonglistService {
 
     @Autowired
     private SonglistWithSongMapper songlistWithSongMapper;
+
+
+    @Autowired
+    private UserMapper userMapper;
 
     /**
      * 歌单dto
@@ -232,5 +240,43 @@ public class SonglistServiceImpl implements SonglistService {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 创建歌单
+     * 不能是【我喜欢】
+     *
+     * @param userId
+     * @param listName
+     * @return
+     */
+    @Override
+    @Transactional
+    public Response createSonglist(Long userId, String listName) throws Exception {
+        if(StringUtils.isEmpty(listName)){
+            return new Response().failure("歌单名不能为空");
+        }
+        if(SysCode.MUSIC_LIST.DEFAULT_LOVE.equals(listName)){
+            return new Response().failure("不能创建【我喜欢】歌单");
+        }
+
+        //用户
+        User user=userMapper.selectByPrimaryKey(userId);
+        if(user==null){
+            throw new Exception("用户不存在");
+        }
+
+
+        Songlist songlist=new Songlist();
+        songlist.setUserId(userId);
+        songlist.setCoverUrl(SysCode.DEFAUT_URL.SONGLIST_COVER);
+        songlist.setFlag(SysCode.FLAG.VALID);
+        songlist.setListName(listName);
+        songlist.setCreateTime(new Date().getTime());
+        songlist.setLastUpdate(new Date().getTime());
+        songlist.setType(SysCode.SONGLIST_TYPE.COMMON_LIST);
+        songlist.setUsername(user.getName());
+        songlistMapper.insertSelective(songlist);
+        return new Response().success("新建歌单成功",null);
     }
 }

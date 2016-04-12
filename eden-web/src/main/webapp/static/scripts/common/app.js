@@ -1237,6 +1237,26 @@ Date.now = Date.now || function () {
     });
 
 
+    //点击创建歌单,弹窗新建歌单输入框
+    $("body").delegate(".showNewSonglist","click",function(){
+
+        //添加到歌单模态框关闭
+        $('#mysonglist_modal').modal("hide");
+
+        Alert.input("请输入你要创建的歌单名",function(listName){
+           if($.trim(listName)==''){
+               Alert.warning('歌单名不能为空');
+           }else if(listName=='我喜欢'){
+               Alert.warning('不能创建【我喜欢】歌单');
+           }else{
+               //新建歌单
+               server.user.newSonglist(listName);
+           }
+        });
+
+    });
+
+
 
 }(jQuery);
 

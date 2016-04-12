@@ -1,6 +1,7 @@
 package com.liaoyb.persistence.service;
 
 import com.liaoyb.base.domain.Page;
+import com.liaoyb.persistence.domain.dto.Response;
 import com.liaoyb.persistence.domain.dto.SongDto;
 import com.liaoyb.persistence.domain.dto.SonglistCountDto;
 import com.liaoyb.persistence.domain.dto.SonglistDto;
@@ -139,4 +140,14 @@ public interface SonglistService {
      * @return
      */
     boolean isSongInSonglist(Long songId,Long songlistId);
+
+
+    /**
+     * 创建歌单
+     * 不能是【我喜欢】
+     * @param userId
+     * @param listName
+     * @return
+     */
+    Response createSonglist(Long userId,String listName) throws Exception;
 }

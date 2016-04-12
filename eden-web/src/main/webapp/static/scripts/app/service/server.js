@@ -91,7 +91,15 @@
                     Alert.success(data.message);
                 })
             });
+        },
+        newSonglist:function(listName){
+            dao.newSonglist(listName).done(function(data){
+               Base.processData(data,function(data){
+                   Alert.success(data.message);
+               });
+            });
         }
+
 
     };
 

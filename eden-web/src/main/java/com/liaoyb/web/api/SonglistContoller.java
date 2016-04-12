@@ -1,6 +1,8 @@
 package com.liaoyb.web.api;
 
+import com.liaoyb.base.annotation.AuthPassport;
 import com.liaoyb.base.domain.Page;
+import com.liaoyb.persistence.domain.dto.Response;
 import com.liaoyb.persistence.domain.dto.SongDto;
 import com.liaoyb.persistence.domain.dto.SongOfList;
 import com.liaoyb.persistence.domain.dto.SonglistCountDto;
@@ -139,6 +141,22 @@ public class SonglistContoller {
     public void findSonglist(HttpServletRequest request, HttpServletResponse response, Page<SonglistCountDto>page,String searchText){
         page=songlistService.findSonglist(page,searchText);
         MyResultUtil.sendPage(response,page);
+    }
+
+
+    /**
+     * 新建歌单
+     * @param request
+     * @param response
+     * @param listName
+     */
+    @RequestMapping("/newSonglist")
+    @AuthPassport
+    public void newSonglist(HttpServletRequest request, HttpServletResponse response,String listName) throws Exception {
+        User currentUser= WebUtils.getCurrentUser(request);
+        Response re=songlistService.createSonglist(currentUser.getId(),listName);
+        MyResultUtil.sendResponse(response,re);
+
     }
 
 }
