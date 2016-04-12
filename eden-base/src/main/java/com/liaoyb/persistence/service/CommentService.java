@@ -1,6 +1,7 @@
 package com.liaoyb.persistence.service;
 
 import com.liaoyb.base.domain.Page;
+import com.liaoyb.persistence.domain.dto.Response;
 import com.liaoyb.persistence.domain.vo.base.Comment;
 import com.liaoyb.persistence.domain.vo.custom.CommentCustom;
 
@@ -40,10 +41,13 @@ public interface CommentService {
     void praiseComment(Long commentId);
 
 
-
-
-
-
-
-
+    /**
+     * 发表评论、回复评论
+     * @param userId
+     * @param type
+     * @param targetId
+     * @param commType 0--发表评论，1--回复评论
+     * @return
+     */
+    Response submitComment(Long userId, Long type, Long targetId,String content, String commType) throws Exception;
 }

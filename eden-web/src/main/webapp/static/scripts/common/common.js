@@ -119,7 +119,12 @@ var Base = {
     processData: function (data, sucess_callback,fail_common,fail_callback) {
         if (data.flag) {
             //成功
-            sucess_callback(data);
+            if(sucess_callback){
+                sucess_callback(data);
+            }else{
+                Alert.success(data.message);
+            }
+
         } else if (data.notLogin) {
 
             //未登录
@@ -158,6 +163,24 @@ function isIE() { //ie?
         return false;
 }
 
+/**
+ * @function escapeHTML 转义html脚本 < > & " '
+ * @param a -
+ *            字符串
+ */
+function escapeHTML(a){
+    a = "" + a;
+    return a.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");;
+};
+/**
+ * @function unescapeHTML 还原html脚本 < > & " '
+ * @param a -
+ *            字符串
+ */
+function unescapeHTML(a){
+    a = "" + a;
+    return a.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&").replace(/&quot;/g, '"').replace(/&apos;/g, "'");
+}
 //不支持ie
 if (isIE()) {
     notie.alert(3, "本网站暂不支持IE,请更换为其他浏览器", 10000);
@@ -269,7 +292,7 @@ function getObjProperty(obj){
 
         addDom:function(){
             this.$element.empty();
-            var insertDom="<div class=\'"+this.options.className+" JtemplatePage_list' ></div><div class='pull-right'><ul class='JtemplatePage_page' ></ul></div>";
+            var insertDom="<div class=\'"+this.options.className+" JtemplatePage_list' ></div><div class='pull-right'><ul class='JtemplatePage_page' ></ul></div><div class='clearfix'></div>";
             if(this.options.isNeedPage){
                 //需要分页
                 this.$element.append(insertDom);
@@ -334,7 +357,7 @@ function getObjProperty(obj){
         },
         complete:function(){
             //完成后的回调方法
-            this.options.complete(this.allData,this.$element);
+            this.options.complete(this.allData,this.$element,this.options.dataType);
         },
         //改变配置
         changeConf:function(options){
@@ -407,8 +430,7 @@ function getObjProperty(obj){
                                         that.param.page.pageNumber=page;
                                     }else{
 
-                                        that.param['pageSize']=that.options.pageSize;
-                                        that.param['pageNumber']=page;
+                                        that.options.pageNumber=page;
                                     }
 
                                     //重新渲染
@@ -418,6 +440,8 @@ function getObjProperty(obj){
                             };
                             //渲染分页
                             that.page_dom.bootstrapPaginator(pageOptions);
+                            //渲染分页后要在后面<div class="clearfix"></div>
+
                         }
 
                     }
@@ -541,11 +565,18 @@ function getObjProperty(obj){
         className:'',
         useParmData:false,//是否,把data-...作为请求参数
         jTemplateSetting:null,
-        complete:function(data,element){
-            //数据长度为0时
-            if(data.length==0){
-                element.html('<div class="m-l ">No data available</div>');
+        complete:function(data,element,dataType){
+            if(dataType=1){
+                //数据长度为0时
+                if(data.row.length==0){
+                    element.html('<div class="m-l ">No data available</div>');
+                }
+            }else if(dataType=2){
+                if(data.length==0){
+                    element.html('<div class="m-l ">No data available</div>');
+                }
             }
+
         },
         //数据获取失败的回调方法
         failCallBack:function(data){

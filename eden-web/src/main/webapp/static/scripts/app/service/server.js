@@ -80,23 +80,37 @@
         },
         addSongToSonglist:function(songId,songlistId){
             dao.addSongToSonglist(songId,songlistId).done(function(data){
-                Base.processData(data,function(data){
-                    Alert.success(data.message);
-                })
+                Base.processData(data);
             });
         },
         toggleSongFromLovelist:function(songId){
             dao.toggleSongFromLovelist(songId).done(function(data){
-                Base.processData(data,function(data){
-                    Alert.success(data.message);
-                })
+                Base.processData(data);
             });
         },
         newSonglist:function(listName){
             dao.newSonglist(listName).done(function(data){
-               Base.processData(data,function(data){
-                   Alert.success(data.message);
-               });
+               Base.processData(data);
+            });
+        },
+        //发布评论,commType 0--发表评论，1--回复评论
+        submitComment:function(type,content,targetId,commType,sucessCallBack){
+            //校验
+            if($.trim(content)==''){
+                Alert.warning("评论不能为空");
+                return;
+            }
+            //替换标签
+            content=escapeHTML(content);
+            dao.submitComment(type,content,targetId,commType).done(function(data){
+                Base.processData(data,function(data){
+                    Alert.success(data.message);
+                    if(sucessCallBack){
+                        sucessCallBack();
+                    }
+                },null,function(data){
+                    Alert.warning(data.message);
+                });
             });
         }
 

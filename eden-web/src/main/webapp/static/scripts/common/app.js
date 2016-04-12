@@ -1257,6 +1257,38 @@ Date.now = Date.now || function () {
     });
 
 
+    //点击发表评论回复
+    //1-歌曲评论,2-歌单评论,3-动态评论,4-专辑评论
+    $("body").delegate(".btnSubmitReply","click",function(){
+        var that=$(this);
+        //目标textarea
+        var textarea=$($(this).data("tar_input"));
+        var fatherCommentId=$(this).data("fathercommentid");
+        server.user.submitComment(null,textarea.val(),fatherCommentId,1,function(){
+            textarea.val('');
+            //重新刷新评论
+            $(that.parents(".my_comment_container").get(0)).jtemplatePag("refresh");
+        });
+    });
+
+
+    //点击发表评论
+    $("body").delegate(".btnSubmitComment","click",function(){
+        var that=$(this);
+        //目标textarea
+        var textarea=$($(this).data("tar_input"));
+        var belong=$(this).data("belong");
+        var type=$(this).data("type");
+        var comment_container=$(this).data("comment_container");
+        server.user.submitComment(type,textarea.val(),belong,0,function(){
+            textarea.val('');
+            //重新刷新评论
+            $(comment_container).jtemplatePag("refresh");
+        });
+    });
+
+
+
 
 }(jQuery);
 

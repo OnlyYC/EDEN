@@ -430,7 +430,7 @@
 
                             //歌单的评论
 
-                            $("#comment_body").jtemplatePag({
+                            $("#comment_songlist_body").jtemplatePag({
                                 template_url: "{$baseUrl}/static/templates/songInfo_comment.html",
                                 data_url: "{$baseUrl}/api/comment/findComments",
                                 isNeedPage: true,
@@ -584,16 +584,16 @@
                                         </div>
                                         <div class="bg-light animated fadeInUp">
                                             <div class="b-a b-light">
-                                                <textarea class="form-control input_comment_container"  rows="2" ></textarea>
+                                                <textarea id="textarea_comment_songlist_{$songlist.id}" class="form-control input_comment_container "  rows="2" ></textarea>
                                                 <div class="m-t m-xs">
-                                                    <button class="btn btn-xs btn-default pull-right">评论</button>
+                                                    <button data-belong="{$songlist.id}" data-comment_container="#comment_songlist_body" data-type="2" data-tar_input="#textarea_comment_songlist_{$songlist.id}" class="btn btn-xs btn-default pull-right btnSubmitComment">评论</button>
                                                     <div class="clearfix"></div>
                                                 </div>
 
                                             </div>
                                             <div >
                                                 <!--评论-->
-                                                <div id="comment_body"></div>
+                                                <div id="comment_songlist_body" class="my_comment_container"></div>
                                             </div>
 
 

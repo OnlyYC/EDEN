@@ -3927,7 +3927,7 @@ fieldset[disabled] .i-checks input + i:before {
 
 
 /*我的css*/
-.handle span{
+.handle>span{
   padding-left: 10px;
 }
 

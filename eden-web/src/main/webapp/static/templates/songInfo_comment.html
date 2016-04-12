@@ -1,6 +1,6 @@
 {#foreach $T as record}
 <div class="b-a b-light padder-v padder">
-    <a href="#" class="pull-left thumb avatar m-r">
+    <a href="/userHome/{$T.record.userId}" data-bjax class="pull-left thumb avatar m-r">
         <img src="{$T.record.userAvatarUrl}">
     </a>
     <div class="clear">
@@ -39,9 +39,9 @@
 
         <!--对单个评论的回复-->
         <div style="display: none;" id="reply{$T.record$index}">
-            <textarea class="form-control" rows="2" ></textarea>
+            <textarea class="form-control" rows="2" id="textarea_reply_{$T.record.id}"></textarea>
             <div class="m-t m-xs">
-                <button data-fatherCommentId="{$T.record.id}" class="btn btn-xs btn-default pull-right">发表回复</button>
+                <button data-fathercommentid="{$T.record.id}" data-tar_input="#textarea_reply_{$T.record.id}"  class="btn btn-xs btn-default pull-right btnSubmitReply">发表回复</button>
                 <div class="clearfix"></div>
             </div>
         </div>

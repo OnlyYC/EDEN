@@ -318,6 +318,9 @@
                                 template_url: "{$baseUrl}/static/templates/songInfo_comment.html",
                                 data_url: "{$baseUrl}/api/comment/findComments",
                                 isNeedPage: true,
+                                jTemplateSetting:{
+                                    filter_data:false
+                                },
                                 parameters: {
                                     type: 1,
                                     belongId: songInfo.song_id
@@ -439,15 +442,15 @@
                                         </div>
                                         <div class="bg-light animated fadeInUp">
                                             <div class="b-a b-light">
-                                                <textarea class="form-control" rows="2" ></textarea>
+                                                <textarea class="form-control" rows="2" id="textarea_comment_{$songInfo.id}"></textarea>
                                                 <div class="m-t m-xs">
-                                                    <button class="btn btn-xs btn-default pull-right">评论</button>
+                                                    <button  data-belong="{$songInfo.id}" data-comment_container="#comment_body" data-type="1" data-tar_input="#textarea_comment_{$songInfo.id}" class="btn btn-xs btn-default pull-right btnSubmitComment">评论</button>
                                                     <div class="clearfix"></div>
                                                 </div>
 
                                             </div>
                                             <div >
-                                                <div id="comment_body"></div>
+                                                <div id="comment_body" class="my_comment_container"></div>
                                             </div>
 
 

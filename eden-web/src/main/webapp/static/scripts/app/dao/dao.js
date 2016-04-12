@@ -119,6 +119,20 @@
         });
     };
 
+    //发布评论、回复评论commType 0--发表评论，1--回复评论
+    var submitComment=function(type,content,targetId,commType){
+        var data={
+            type:type,
+            content:content,
+            targetId:targetId,
+            commType:commType
+        };
+
+        return utils.post(baseUrl+'/api/comment/submitComment',data,function(data){
+            return data;
+        });
+    };
+
 
 
 
@@ -134,7 +148,8 @@
         logout:logout,
         addSongToSonglist:addSongToSonglist,
         toggleSongFromLovelist:toggleSongFromLovelist,
-        newSonglist:newSonglist
+        newSonglist:newSonglist,
+        submitComment:submitComment
 
     }
 

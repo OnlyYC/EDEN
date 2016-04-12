@@ -318,11 +318,17 @@
                                             $($(target).find(".coments_for_dynamic").get(0)).jtemplatePag({
                                                 template_url: "{$baseUrl}/static/templates/songInfo_comment.html",
                                                 data_url: "{$baseUrl}/api/comment/findComments",
+                                                jTemplateSetting:{
+                                                    filter_data:false
+                                                },
                                                 parameters:{
                                                     type:3,
                                                     belongId:param
                                                 },
                                                 complete:function(data,element){
+                                                    //更新评论数
+                                                    var comcount=$(element.data("comcount"));
+                                                    comcount.text(data.total);
                                                     $(element.find(".dy_comment_reply")).hideAndShow({
 
                                                     });
