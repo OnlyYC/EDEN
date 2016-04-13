@@ -332,12 +332,12 @@
                                         "render": function (data, type, full, meta) {
                                             var result = '';
                                             if (full.like) {
-                                                result += '<span class="active"  data-toggle="toggle">' +
+                                                result += '<span class="active toggleFromMyLovelist" data-song_id=\"'+full.song_id+'\" data-toggle="toggle">' +
                                                         '<i class="fa fa-heart-o  text "></i>' +
                                                         '<i class="fa fa-heart  text-active  text-danger"></i>' +
                                                         '</span>';
                                             } else {
-                                                result += '<span class="active"  data-toggle="toggle">' +
+                                                result += '<span class="active toggleFromMyLovelist" data-song_id=\"'+full.song_id+'\"  data-toggle="toggle">' +
                                                         '<i class="fa fa-heart-o text-active   "></i>' +
                                                         '<i class="fa fa-heart text  text-danger"></i>' +
                                                         '</span>';
@@ -475,7 +475,7 @@
                                                 <span>+</span>
                                             </button>
                                         </div>
-                                        <button class="btn btn-default">
+                                        <button data-target="{$album.id}" data-collecttype="2"  class="btn btn-default btnAddToCollect">
                                             <span class="fa fa-plus-square-o"></span>
                                             收藏
                                         </button>
@@ -533,16 +533,16 @@
                                         </div>
                                         <div class="bg-light animated fadeInUp">
                                             <div class="b-a b-light">
-                                                <textarea class="form-control input_comment_container"  rows="2" ></textarea>
+                                                <textarea id="textarea_comment_{$album.id}" class="form-control input_comment_container"  rows="2" ></textarea>
                                                 <div class="m-t m-xs">
-                                                    <button class="btn btn-xs btn-default pull-right">评论</button>
+                                                    <button data-belong="{$album.id}" data-comment_container="#comment_body" data-type="4" data-tar_input="#textarea_comment_{$album.id}" class="btn btn-xs btn-default pull-right btnSubmitComment">评论</button>
                                                     <div class="clearfix"></div>
                                                 </div>
 
                                             </div>
                                             <div >
                                                 <!--评论-->
-                                                <div id="comment_body"></div>
+                                                <div id="comment_body" class="my_comment_container"></div>
                                             </div>
 
                                         </div>

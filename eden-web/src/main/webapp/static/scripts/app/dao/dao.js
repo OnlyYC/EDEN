@@ -133,6 +133,17 @@
         });
     };
 
+    //收藏
+    var collect=function(targetId,collectType){
+        var data={
+          targetId:targetId,
+          collectType:collectType
+        };
+        return utils.post(baseUrl+'/api/user/collect',data,function(data){
+            return data;
+        });
+    };
+
 
 
 
@@ -149,7 +160,8 @@
         addSongToSonglist:addSongToSonglist,
         toggleSongFromLovelist:toggleSongFromLovelist,
         newSonglist:newSonglist,
-        submitComment:submitComment
+        submitComment:submitComment,
+        collect:collect
 
     }
 

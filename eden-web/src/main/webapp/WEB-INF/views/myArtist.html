@@ -348,13 +348,12 @@
 
                                     var my_artist=$('#my_artist').DataTable();
                                     //每一行 点击事件
-                                    $('#my_artist tbody').click( function () {
-
+                                    $('#my_artist tbody').delegate('tr', 'click', function () {
 
                                         var curRow=my_artist.row($(this));
                                         //当前行的数据
                                         console.info(curRow.data());
-                                        //调到歌手页面
+                                        //跳到歌手页面
                                         var url=baseUrl+'/artist/'+curRow.data().id;
                                         $(this).bjax({
                                             url: url

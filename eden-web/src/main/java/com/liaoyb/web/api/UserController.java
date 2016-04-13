@@ -2,12 +2,15 @@ package com.liaoyb.web.api;
 
 import com.liaoyb.base.annotation.AuthPassport;
 import com.liaoyb.base.domain.Page;
+import com.liaoyb.base.support.exception.CustomException;
 import com.liaoyb.persistence.domain.dto.*;
+import com.liaoyb.persistence.domain.vo.base.Collect;
 import com.liaoyb.persistence.domain.vo.base.User;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
+import com.liaoyb.persistence.service.CollectService;
 import com.liaoyb.persistence.service.UserService;
 import com.liaoyb.persistence.serviceImpl.UserServiceImpl;
-import com.liaoyb.support.exception.SourcesNotFoundException;
+import com.liaoyb.base.support.exception.SourcesNotFoundException;
 import com.liaoyb.support.utils.MyResultUtil;
 import com.liaoyb.support.utils.WebUtils;
 import com.liaoyb.util.MailUtil;
@@ -23,6 +26,7 @@ import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -38,6 +42,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private CollectService collectService;
 
 
     /**
@@ -321,7 +328,12 @@ public class UserController {
     }
 
 
-
+    /**
+     * 添加到我喜欢歌单
+     * @param request
+     * @param response
+     * @param songId
+     */
     @RequestMapping("/toggleSongFromLovelist")
     @AuthPassport
     public void toggleSongFromLovelist(HttpServletRequest request,HttpServletResponse response,Long songId) {
@@ -331,6 +343,23 @@ public class UserController {
     }
 
 
+
+    /**
+     * 添加到收藏
+     * @param request
+     * @param response
+     * @param collect
+     * @throws CustomException
+     */
+    @RequestMapping("/collect")
+    @AuthPassport
+    public void collect(HttpServletRequest request, HttpServletResponse response, Collect collect) throws CustomException {
+        UserDto userDto=WebUtils.getCurrentUser(request);
+        collect.setUserId(userDto.getId());
+        collect.setDate(new Date().getTime());
+        Response res=collectService.andToCollect(collect);
+        MyResultUtil.sendResponse(response,res);
+    }
 
 
 

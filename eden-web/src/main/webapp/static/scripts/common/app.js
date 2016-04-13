@@ -1222,7 +1222,7 @@ Date.now = Date.now || function () {
 
     });
 
-    //按钮点击，显示添加到对话框
+    //按钮点击，显示添加到歌单对话框
     $("body").delegate(".addToSonglist","click",function(){
         var songId=$(this).data('song_id');
         showAddToSonglist(songId);
@@ -1289,6 +1289,15 @@ Date.now = Date.now || function () {
 
 
 
+    //收藏
+    $("body").delegate(".btnAddToCollect","click",function(){
+        var targetId=$(this).data("target");
+        var collectType=$(this).data("collecttype");
+        server.user.collect(targetId,collectType);
+    });
+
+
+
 
 }(jQuery);
 
@@ -1329,7 +1338,11 @@ function showAddToSonglist(songId){
             dataType:2,
             isNeedPage:false,
             failCallBack:function(){
-                $('#mysonglist_modal').modal("hide");
+                //$('#mysonglist_modal').modal("hide");
+            },
+            complete:function(allData){
+                //显示模态框
+                $('#mysonglist_modal').modal("show");
             }
 
         });
@@ -1339,8 +1352,7 @@ function showAddToSonglist(songId){
 
 
 
-    //显示模态框
-    $('#mysonglist_modal').modal("show");
+
 }
 
 

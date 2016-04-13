@@ -1,7 +1,7 @@
 {#foreach $T as record}
 <div class="b-a b-light  m-md">
     <div class="m-t">
-        <button class="btn btn-default  pull-right">
+        <button data-target="{$T.record.userId}" data-collecttype="5" class="btn btn-default  pull-right btnAddToCollect">
             <i class="icon-plus icon"></i>
             关注
         </button>

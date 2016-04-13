@@ -93,6 +93,7 @@
                Base.processData(data);
             });
         },
+
         //发布评论,commType 0--发表评论，1--回复评论
         submitComment:function(type,content,targetId,commType,sucessCallBack){
             //校验
@@ -112,7 +113,15 @@
                     Alert.warning(data.message);
                 });
             });
+        },
+
+        //收藏
+        collect:function(targetId,collectType){
+            dao.collect(targetId,collectType).done(function(data){
+                Base.processData(data);
+            })
         }
+
 
 
     };

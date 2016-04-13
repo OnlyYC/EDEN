@@ -7,7 +7,7 @@ import com.liaoyb.persistence.domain.dto.UserDto;
 import com.liaoyb.persistence.domain.vo.base.User;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
 import com.liaoyb.persistence.service.SongService;
-import com.liaoyb.support.exception.SourcesNotFoundException;
+import com.liaoyb.base.support.exception.SourcesNotFoundException;
 import com.liaoyb.support.utils.MyResultUtil;
 import com.liaoyb.support.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;

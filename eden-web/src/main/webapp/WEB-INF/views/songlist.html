@@ -509,7 +509,7 @@
                                         </div>
                                         <!--如果是当前用户，没有收藏这个按钮-->
                                         {if !$songlist.userOwn}
-                                        <button class="btn btn-default">
+                                        <button data-target="{$songlist.id}" data-collecttype="1"  class="btn btn-default btnAddToCollect">
                                             <span class="fa fa-plus-square-o"></span>
                                             收藏({$songlist.collectCount})
                                         </button>

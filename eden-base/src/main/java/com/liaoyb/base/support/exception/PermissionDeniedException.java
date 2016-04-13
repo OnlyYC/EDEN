@@ -1,4 +1,4 @@
-package com.liaoyb.support.exception;
+package com.liaoyb.base.support.exception;
 
 /**
  * 权限不足异常

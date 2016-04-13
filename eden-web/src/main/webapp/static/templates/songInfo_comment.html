@@ -29,7 +29,7 @@
                     <i class="icon-like icon"></i>
                     ({$T.record.praiseCount})
                 </span>
-                <span class="click dy_comment_reply"  data-target="#reply{$T.record$index}">
+                <span class="click dy_comment_reply"  data-target="#reply_{$T.record.id}_{$T.record$index}">
                     回复({$T.record.childCommentCount})
                 </span>
 
@@ -38,7 +38,7 @@
         </div>
 
         <!--对单个评论的回复-->
-        <div style="display: none;" id="reply{$T.record$index}">
+        <div style="display: none;" id="reply_{$T.record.id}_{$T.record$index}">
             <textarea class="form-control" rows="2" id="textarea_reply_{$T.record.id}"></textarea>
             <div class="m-t m-xs">
                 <button data-fathercommentid="{$T.record.id}" data-tar_input="#textarea_reply_{$T.record.id}"  class="btn btn-xs btn-default pull-right btnSubmitReply">发表回复</button>

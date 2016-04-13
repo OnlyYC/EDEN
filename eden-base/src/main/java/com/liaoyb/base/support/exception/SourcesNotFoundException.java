@@ -1,4 +1,4 @@
-package com.liaoyb.support.exception;
+package com.liaoyb.base.support.exception;
 
 /**
  * 资源未找到异常

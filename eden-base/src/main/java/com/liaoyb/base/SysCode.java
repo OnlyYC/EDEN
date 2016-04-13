@@ -48,8 +48,9 @@ public class SysCode {
 	public static interface COLLECT_TYPE{
 		public static final Long SONGLIST=1L;
 		public static final Long ALBUM=2L;
-		public static final Long MV=3L;
-		public static final Long USER=4L;
+		public static final Long Artist=3L;
+		public static final Long MV=4L;
+		public static final Long USER=5L;
 	}
 
 

@@ -347,9 +347,9 @@
                                       <span class="bg-danger">组合</span>
                                     {/if}
                                     <span class="h3 m-l">{$artist.name}</span>
-                                    <button  class="pull-right btn btn-default">
+                                    <button data-target="{$artist.id}" data-collecttype="3"  class="pull-right btn btn-default btnAddToCollect">
                                         <span class="fa fa-plus-square-o m-r"></span>
-                                        收藏
+                                        关注
                                     </button>
                                     <div class="b-light m-t ">
                                         <span class="text-muted clear text-ellipsis m-t">单曲数:{$artist.singleSongCount}</span>

@@ -1,4 +1,4 @@
-package com.liaoyb.support.exception;
+package com.liaoyb.base.support.exception;
 
 /**
  * 自定义异常

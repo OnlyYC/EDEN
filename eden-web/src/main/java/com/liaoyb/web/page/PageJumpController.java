@@ -12,7 +12,7 @@ import com.liaoyb.persistence.domain.vo.base.Album;
 import com.liaoyb.persistence.domain.vo.base.User;
 import com.liaoyb.persistence.domain.vo.custom.SongCustom;
 import com.liaoyb.persistence.service.*;
-import com.liaoyb.support.exception.SourcesNotFoundException;
+import com.liaoyb.base.support.exception.SourcesNotFoundException;
 import com.liaoyb.support.utils.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

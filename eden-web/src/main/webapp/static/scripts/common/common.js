@@ -149,7 +149,7 @@ var Base = {
             } else {
                 //返回的错误信息
                 var message=data.message||'数据获取失败';
-                Alert.error(message);
+                Alert.warning(message);
             }
 
         }
@@ -566,12 +566,13 @@ function getObjProperty(obj){
         useParmData:false,//是否,把data-...作为请求参数
         jTemplateSetting:null,
         complete:function(data,element,dataType){
-            if(dataType=1){
+            dataType=1||dataType;
+            if(dataType==1){
                 //数据长度为0时
-                if(data.row.length==0){
+                if(data.rows.length==0){
                     element.html('<div class="m-l ">No data available</div>');
                 }
-            }else if(dataType=2){
+            }else if(dataType==2){
                 if(data.length==0){
                     element.html('<div class="m-l ">No data available</div>');
                 }

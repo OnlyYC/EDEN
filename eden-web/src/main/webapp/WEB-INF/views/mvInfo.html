@@ -308,13 +308,18 @@
                                         type: 1,
                                         belongId: songInfo.song_id
                                     },
-                                    complete: function (allData) {
+                                    complete: function (allData,element) {
                                         //设置评论总数
                                         $("#comments_count").text(allData.total);
                                         //如果评论数为0
                                         if (allData.total == 0) {
                                             $("#comment_body").append("<h3>还没有评论</h3>");
                                         }
+
+                                        //每个回复的点击
+                                        $(element.find(".dy_comment_reply")).hideAndShow({
+
+                                        });
 
                                     }
                                 });
@@ -409,7 +414,7 @@
                                             </div>
                                             <div class="line b-b"></div>
                                             <div class="clear ">
-                                                <button class="btn btn-default">
+                                                <button data-target="{$songInfo.id}" data-collecttype="4" class="btn btn-default btnAddToCollect">
                                                     <span class="fa fa-plus-square"></span>
                                                     收藏
                                                 </button>
@@ -432,15 +437,15 @@
                                         </div>
                                         <div class="bg-light animated fadeInUp">
                                             <div class="b-a b-light">
-                                                <textarea class="form-control" rows="2" ></textarea>
+                                                <textarea class="form-control" rows="2" id="textarea_comment_{$songInfo.id}" ></textarea>
                                                 <div class="m-t m-xs">
-                                                    <button class="btn btn-xs btn-default pull-right">评论</button>
+                                                    <button data-belong="{$songInfo.id}" data-comment_container="#comment_body" data-type="1" data-tar_input="#textarea_comment_{$songInfo.id}" class="btn btn-xs btn-default pull-right btnSubmitComment">评论</button>
                                                     <div class="clearfix"></div>
                                                 </div>
 
                                             </div>
                                             <div >
-                                                <div id="comment_body"></div>
+                                                <div id="comment_body" class="my_comment_container"></div>
                                             </div>
 
 
@@ -575,6 +580,7 @@
 <script type="text/javascript" src="{$baseUrl}/static/scripts/app/dao/dao.js"></script>
 <script type="text/javascript" src="{$baseUrl}/static/scripts/app/service/server.js"></script>
 <script type="text/javascript" src="{$baseUrl}/static/scripts/app/service/user_login_register.js"></script>
+
 <script>
     init();
 </script>
