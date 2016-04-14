@@ -2,9 +2,8 @@ package com.liaoyb.persistence.dao.base;
 
 import com.liaoyb.persistence.domain.vo.base.Myfile;
 import com.liaoyb.persistence.domain.vo.base.MyfileExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface MyfileMapper {
     int countByExample(MyfileExample example);

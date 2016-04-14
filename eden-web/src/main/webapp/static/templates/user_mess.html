@@ -1,0 +1,39 @@
+
+
+{#foreach $T as record}
+
+{#if $T.record.type==1}
+<span  class="media list-group-item">
+    <a href="/userHome/{$T.fromUser}" data-bjax class="pull-left thumb-sm">
+        <img src="{$T.fromUserAvatar}" alt="..." class="img-circle">
+    </a>
+    <span class="pull-right h3 click">
+        &times;
+    </span>
+    <span class="media-body block m-b-none">
+      {$T.record.content}
+      <small class="text-muted">{fmtDate($T.record.date,'yyyy-MM-dd hh:mm')}</small>
+    </span>
+
+    <div class="clearfix"></div>
+</span>
+{#elseif $T.record.type==2}
+
+
+<span  class="media list-group-item">
+    <span class="pull-left thumb-sm text-center">
+        <i class="fa fa-envelope-o fa-2x text-success"></i>
+    </span>
+    <span class="pull-right h3 click">
+        &times;
+    </span>
+    <span class="media-body block m-b-none">
+        <span class="text-ellipsis text-xs text-muted">{$T.record.content}</span>
+        <small class="text-muted">{fmtDate($T.record.date,'yyyy-MM-dd hh:mm')}</small>
+    </span>
+    <div class="clearfix"></div>
+</span>
+{#/if}
+
+
+{#/for}

@@ -1296,6 +1296,26 @@ Date.now = Date.now || function () {
         server.user.collect(targetId,collectType);
     });
 
+    //赞评论
+    $("body").delegate(".btnPraiseComment","click",function(){
+        var commentId=$(this).data("comment");
+        var currentTime=new Date().getTime();
+        var lastPriseTime=$(this).data("lastPriseTime");
+        if(lastPriseTime&&((currentTime-lastPriseTime)<1000*60*5)){
+            //
+            Alert.warning("你刚赞了该评论,请等会儿再试");
+            return;
+        }
+        $(this).data("lastPriseTime",currentTime);
+        var that=$(this);
+
+        server.open.praiseComment(commentId,function(){
+            //赞后成功了对数量加1
+            var praiseCount=$(that.find(".praiseCount").get(0));
+            var $v=parseInt(praiseCount.text());
+            praiseCount.text($v+1);
+        });
+    });
 
 
 
@@ -1359,4 +1379,43 @@ function showAddToSonglist(songId){
 //我喜欢歌单,如果原来在里面就移除，如果原来没有就添加
 function toggleSongMyLovelist(songId){
     server.user.toggleSongFromLovelist(songId);
+}
+
+
+//初始化用户信息
+function initUserMess(){
+    //如果用户已登录
+    if(!currentUserId){
+        return;
+    }
+
+
+    $("#user_mess_group").jtemplatePag({
+        template_url: baseUrl+"/static/templates/user_mess.html",
+        data_url: baseUrl+"/api/mess/showMyLastMess",
+        isNeedPage: false,
+        pageSize:5,
+        pageNumber:1,
+        jTemplateSetting:{
+            filter_data:false
+        },
+        complete:function(data,element){
+            //设置信息数目
+            $("#songlist_user_created_count").text(data.total);
+
+            //是否显示更多按钮
+            if(data.total>5){
+                $("#btn_show_more_mess").css('display','block');
+            }else{
+                $("#btn_show_more_mess").css('display','none');
+            }
+
+
+            //数据长度为0时
+            if(data.rows.length==0){
+                element.html('<div class="m-l ">No data available</div>');
+            }
+        }
+
+    });
 }

@@ -39,7 +39,6 @@ public class CommentController {
         MyResultUtil.sendPage(response,page);
     }
 
-    //
 
     /**
      * 发表评论、回复评论
@@ -55,5 +54,21 @@ public class CommentController {
         Response res=commentService.submitComment(currentUser.getId(),type,targetId,content,commType);
         MyResultUtil.sendResponse(response,res);
     }
+
+
+
+    /**
+     *
+     * 赞评论
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @RequestMapping("/praiseComment")
+    public void praiseComment(HttpServletRequest request, HttpServletResponse response,Long commentId) throws Exception {
+        commentService.praiseComment(commentId);
+        MyResultUtil.sendSuccess(response,"你赞了该用户评论");
+    }
+
 
 }

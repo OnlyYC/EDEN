@@ -9,7 +9,7 @@ public class Myfile {
 
     private Long fileType;
 
-    private String path;
+    private String location;
 
     private String url;
 
@@ -45,12 +45,12 @@ public class Myfile {
         this.fileType = fileType;
     }
 
-    public String getPath() {
-        return path;
+    public String getLocation() {
+        return location;
     }
 
-    public void setPath(String path) {
-        this.path = path == null ? null : path.trim();
+    public void setLocation(String location) {
+        this.location = location == null ? null : location.trim();
     }
 
     public String getUrl() {

@@ -68,11 +68,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     @Transactional
     public void praiseComment(Long commentId) {
-        //先找到原评论
-        Comment oldComment=commentMapper.selectByPrimaryKey(commentId);
-        oldComment.setPraiseCount(oldComment.getPraiseCount()+1);
-        commentMapper.updateByPrimaryKeySelective(oldComment);
-
+        commentMapperCustom.praiseComment(commentId);
     }
 
     /**

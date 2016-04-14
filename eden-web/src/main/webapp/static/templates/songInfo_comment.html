@@ -25,9 +25,9 @@
         <!--回复的 赞-->
         <div class="clear">
             <div class="pull-right handle">
-                <span class="click">
+                <span class="click btnPraiseComment" data-comment="{$T.record.id}">
                     <i class="icon-like icon"></i>
-                    ({$T.record.praiseCount})
+                    (<span class="praiseCount">{$T.record.praiseCount}</span>)
                 </span>
                 <span class="click dy_comment_reply"  data-target="#reply_{$T.record.id}_{$T.record$index}">
                     回复({$T.record.childCommentCount})

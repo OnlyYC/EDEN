@@ -58,14 +58,14 @@ public class FileServiceImpl implements FileService {
         //文件名
         String fileName= UUIDUtil.getRandomStr()+fileUpload.getOriginalFilename().substring(fileUpload.getOriginalFilename().lastIndexOf("."));
 
-        myfile.setPath(saveBasePath+"/"+fileName);
+        myfile.setLocation(saveBasePath+"/"+fileName);
         myfile.setUrl(baseUrl+"/"+fileName);
         myfile.setAddTime(new Date().getTime());
         myfile.setFileSize(fileUpload.getSize());
 
 
         try {
-            FileUtils.writeByteArrayToFile(new File(myfile.getPath()),fileUpload.getBytes());
+            FileUtils.writeByteArrayToFile(new File(myfile.getLocation()),fileUpload.getBytes());
             //插入
             myfileMapper.insertSelective(myfile);
         } catch (IOException e) {

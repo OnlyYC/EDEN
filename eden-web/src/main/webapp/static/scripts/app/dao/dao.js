@@ -143,6 +143,21 @@
             return data;
         });
     };
+    //赞评论
+    var praiseComment=function(commentId){
+      var data={
+          commentId:commentId
+      };
+      return utils.post(baseUrl+'/api/comment/praiseComment',data,function(data){
+          return data;
+      });
+    };
+    //用户最新信息
+    var showMyLastMess=function(paramData){
+        return utils.post(baseUrl+'/api/mess/showMyLastMess',paramData,function(data){
+            return data;
+        });
+    };
 
 
 
@@ -161,7 +176,9 @@
         toggleSongFromLovelist:toggleSongFromLovelist,
         newSonglist:newSonglist,
         submitComment:submitComment,
-        collect:collect
+        collect:collect,
+        praiseComment:praiseComment,
+        showMyLastMess:showMyLastMess
 
     }
 

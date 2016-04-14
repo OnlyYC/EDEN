@@ -2,9 +2,8 @@ package com.liaoyb.persistence.dao.base;
 
 import com.liaoyb.persistence.domain.vo.base.Mess;
 import com.liaoyb.persistence.domain.vo.base.MessExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface MessMapper {
     int countByExample(MessExample example);

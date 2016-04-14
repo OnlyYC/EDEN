@@ -5,6 +5,8 @@ public class Mess {
 
     private Long date;
 
+    private String fromUserAvatar;
+
     private Long fromUser;
 
     private String fromUserName;
@@ -31,6 +33,14 @@ public class Mess {
 
     public void setDate(Long date) {
         this.date = date;
+    }
+
+    public String getFromUserAvatar() {
+        return fromUserAvatar;
+    }
+
+    public void setFromUserAvatar(String fromUserAvatar) {
+        this.fromUserAvatar = fromUserAvatar == null ? null : fromUserAvatar.trim();
     }
 
     public Long getFromUser() {

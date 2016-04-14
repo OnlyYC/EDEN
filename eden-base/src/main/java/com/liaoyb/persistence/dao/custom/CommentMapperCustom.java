@@ -35,4 +35,11 @@ public interface CommentMapperCustom {
     List<CommentCustom> findCommentCustomsHot(@Param("belongId") Long belongId, @Param("type") Long type);
 
 
+    /**
+     * 赞评论
+     * @param commentId
+     */
+    int praiseComment(@Param("commentId") Long commentId);
+
+
 }

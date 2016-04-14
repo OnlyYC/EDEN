@@ -224,6 +224,76 @@ public class MessExample {
             return (Criteria) this;
         }
 
+        public Criteria andFromUserAvatarIsNull() {
+            addCriterion("fromUserAvatar is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserAvatarIsNotNull() {
+            addCriterion("fromUserAvatar is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserAvatarEqualTo(String value) {
+            addCriterion("fromUserAvatar =", value, "fromUserAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserAvatarNotEqualTo(String value) {
+            addCriterion("fromUserAvatar <>", value, "fromUserAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserAvatarGreaterThan(String value) {
+            addCriterion("fromUserAvatar >", value, "fromUserAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserAvatarGreaterThanOrEqualTo(String value) {
+            addCriterion("fromUserAvatar >=", value, "fromUserAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserAvatarLessThan(String value) {
+            addCriterion("fromUserAvatar <", value, "fromUserAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserAvatarLessThanOrEqualTo(String value) {
+            addCriterion("fromUserAvatar <=", value, "fromUserAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserAvatarLike(String value) {
+            addCriterion("fromUserAvatar like", value, "fromUserAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserAvatarNotLike(String value) {
+            addCriterion("fromUserAvatar not like", value, "fromUserAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserAvatarIn(List<String> values) {
+            addCriterion("fromUserAvatar in", values, "fromUserAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserAvatarNotIn(List<String> values) {
+            addCriterion("fromUserAvatar not in", values, "fromUserAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserAvatarBetween(String value1, String value2) {
+            addCriterion("fromUserAvatar between", value1, value2, "fromUserAvatar");
+            return (Criteria) this;
+        }
+
+        public Criteria andFromUserAvatarNotBetween(String value1, String value2) {
+            addCriterion("fromUserAvatar not between", value1, value2, "fromUserAvatar");
+            return (Criteria) this;
+        }
+
         public Criteria andFromUserIsNull() {
             addCriterion("fromUser is null");
             return (Criteria) this;

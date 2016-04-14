@@ -19,6 +19,11 @@
 
     </resultMap>
 
+    <!--赞评论-->
+    <update id="praiseComment">
+        UPDATE comment set praiseCount=praiseCount+1 WHERE id=#{commentId}
+    </update>
+
     <!--子评论-->
     <select id="findChildComments" resultType="com.liaoyb.persistence.domain.vo.base.Comment">
         select * from comment where fatherCommentId=#{fatherCommentId}

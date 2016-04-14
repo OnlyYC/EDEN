@@ -143,11 +143,16 @@
 	});
 	
 	// add notes
+	//添加信息，最多显示5条,多余的话，之前的被移除，只显示最新的
 	function addMsg($msg){
+
 		var $el = $('.nav-user'), $n = $('.count:first', $el), $v = parseInt($n.text());
 		$('.count', $el).fadeOut().fadeIn().text($v+1);
 		$($msg).hide().prependTo($el.find('.list-group')).slideDown().css('display','block');
+
 	}
+
+	  //通知模板
 	var $msg = '<a href="#" class="media list-group-item">'+
                   '<span class="pull-left thumb-sm text-center">'+
                     '<i class="fa fa-envelope-o fa-2x text-success"></i>'+
@@ -156,7 +161,10 @@
                     'Sophi sent you a email<br>'+
                     '<small class="text-muted">1 minutes ago</small>'+
                   '</span>'+
-                '</a>';	
+                '</a>';
+	  //普通信息模板(私信)
+
+
   	setTimeout(function(){addMsg($msg);}, 1500);
 	setTimeout(function(){addMsg($msg);}, 1500);
 

@@ -125,12 +125,25 @@
 
 
     };
+    var open={
+        praiseComment:function(commentId,successCallback){
+            dao.praiseComment(commentId).done(function(data){
+               Base.processData(data,function(data){
+                   Alert.success(data.message);
+                   if(successCallback){
+                       successCallback();
+                   }
+               });
+            });
+        }
+    };
 
     win.server={
         song:song,
         songlist:songlist,
         album:album,
-        user:user
+        user:user,
+        open:open
     }
 
 
