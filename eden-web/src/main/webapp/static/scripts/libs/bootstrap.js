@@ -714,12 +714,23 @@ if (typeof jQuery === 'undefined') { throw new Error('Bootstrap\'s JavaScript re
   }
 
   function clearMenus(e) {
-    $(backdrop).remove()
+
+    $(backdrop).remove();
+    //my api
+    if(e&&e.target){
+      var target= $(e.target);
+      if(target.hasClass('notClose')){
+        return;
+      }
+
+    }
     $(toggle).each(function () {
       var $parent = getParent($(this))
       var relatedTarget = { relatedTarget: this }
       if (!$parent.hasClass('open')) return
       $parent.trigger(e = $.Event('hide.bs.dropdown', relatedTarget))
+
+
       if (e.isDefaultPrevented()) return
       $parent.removeClass('open').trigger('hidden.bs.dropdown', relatedTarget)
     })

@@ -23,4 +23,21 @@ public interface MessService {
      * @return
      */
     Page<Mess> findUserLastMess(Page<Mess> page, Long userId,Long lastTime);
+
+    /**
+     * 用户之前未读的信息
+     * @param page
+     * @param userId
+     * @param previousTime
+     * @return
+     */
+    Page<Mess> findUserPreviousMess(Page<Mess> page, Long userId, Long previousTime);
+
+    /**
+     * 把消息置为已读
+     * @param userId
+     * @param messId
+     * @return
+     */
+    boolean readMess(Long userId, Long[] messId);
 }

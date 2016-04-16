@@ -3,11 +3,11 @@
 {#foreach $T as record}
 
 {#if $T.record.type==1}
-<span  class="media list-group-item">
+<span  class="media list-group-item mess" data-time="{$T.record.date}" data-id="{$T.record.id}">
     <a href="/userHome/{$T.fromUser}" data-bjax class="pull-left thumb-sm">
         <img src="{$T.fromUserAvatar}" alt="..." class="img-circle">
     </a>
-    <span class="pull-right h3 click">
+    <span class="pull-right h3 click notClose removeMess">
         &times;
     </span>
     <span class="media-body block m-b-none">
@@ -20,11 +20,11 @@
 {#elseif $T.record.type==2}
 
 
-<span  class="media list-group-item">
+<span  class="media list-group-item mess" data-time="{$T.record.date}" data-id="{$T.record.id}">
     <span class="pull-left thumb-sm text-center">
         <i class="fa fa-envelope-o fa-2x text-success"></i>
     </span>
-    <span class="pull-right h3 click">
+    <span class="pull-right h3 click notClose removeMess">
         &times;
     </span>
     <span class="media-body block m-b-none">

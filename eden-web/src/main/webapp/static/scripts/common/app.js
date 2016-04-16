@@ -1318,8 +1318,127 @@ Date.now = Date.now || function () {
     });
 
 
+    //显示更多，没点击一次，获取之前未读的消息（如果没有了，显示更多隐藏）
+    $("#btn_show_more_mess").click(function(){
+        //获取最下面消息的时间
+        var previousTime=getPreviousTime();
+        //拿到消息
+        server.user.showMyUreadMessPrevious(function(data){
+            //追加到最后
+            handleMessDown(data);
+
+        },previousTime,5,1)
+    });
+    //移除，事件
+    $("body").delegate(".removeMess","click",function(){
+        var parent=$($(this).parent(".mess"));
+        var messId=parent.data("id");
+        console.info(messId);
+        parent.slideUp(function(){
+            //发送请求,置为已读
+            readOneMess(function(data){
+                //每次移除都去拿一条以前的
+                getOneUreadMessPrevious();
+
+                //还是否有消息，把全部标记为已读置为隐藏
+                setReadAllStatus();
+            },messId);
+
+
+
+        });
+
+
+
+        //数字减1
+        var $el = $('.nav-user'), $n = $('.count:first', $el), $v = parseInt($n.text());
+        $('.count', $el).fadeOut().fadeIn().text($v-1);
+
+
+
+    });
+
+    //全部设置为已读
+    $("#read_all").click(function(){
+        readAll();
+    });
+
 
 }(jQuery);
+
+function setReadAllStatus(){
+    var $el = $('.nav-user'), $n = $('.count:first', $el), $v = parseInt($n.text());
+    if($v==0){
+        $("#read_all").css('display','none');
+    }
+}
+
+//当前的全部设置为已读
+function readAll(){
+    var ehMess= $($('.nav-user').find('.list-group').get(0)).children("span");
+    var messIdArray=new Array();
+    $.each(ehMess,function(index,element){
+        var messId=$(this).data("id");
+        messIdArray.push(messId);
+    });
+    if(messIdArray.length==0){
+        Alert.warning("当前没有未读消息了");
+        return;
+    }
+
+    server.user.readMess(function(data){
+
+        //更新消息数目
+
+        var $el = $('.nav-user'), $n = $('.count:first', $el), $v = parseInt($n.text());
+        var resultCount=0;
+        if(($v-messIdArray.length)>0){
+            resultCount=$v-messIdArray.length;
+        }
+        $('.count', $el).fadeOut().fadeIn().text(resultCount);
+
+        Alert.success(data.message);
+        //遍历，移除
+        $.each(ehMess,function(index,element){
+
+            $(this).slideUp(function(){
+                $(this).remove();
+                if(index==(ehMess.length-1)){
+                    getUreadMessPrevious(5);
+                }
+            });
+        });
+
+
+    },messIdArray);
+}
+
+//设置一条已读消息
+function readOneMess(callBack,messId){
+    var messIdArray=new Array();
+    messIdArray.push(messId);
+    server.user.readMess(callBack,messIdArray);
+}
+
+
+
+
+//拿一条之前未看的信息
+function getOneUreadMessPrevious(){
+    getUreadMessPrevious(1);
+}
+
+//拿之前未看的信息
+function getUreadMessPrevious(count){
+    var previousTime=getPreviousTime();
+    //拿到消息
+    server.user.showMyUreadMessPrevious(function(data){
+        //追加到最后
+        handleMessDown(data);
+
+    },previousTime,count,1)
+}
+
 
 
 //搜索
@@ -1385,7 +1504,7 @@ function toggleSongMyLovelist(songId){
 //初始化用户信息
 function initUserMess(){
     //如果用户已登录
-    if(!currentUserId){
+    if(typeof(currentUserId)=="undefined"||currentUserId==null){
         return;
     }
 
@@ -1401,21 +1520,135 @@ function initUserMess(){
         },
         complete:function(data,element){
             //设置信息数目
-            $("#songlist_user_created_count").text(data.total);
+            $(".count").text(data.total);
 
             //是否显示更多按钮
-            if(data.total>5){
-                $("#btn_show_more_mess").css('display','block');
-            }else{
+            if(data.total<=5){
                 $("#btn_show_more_mess").css('display','none');
             }
 
-
-            //数据长度为0时
-            if(data.rows.length==0){
-                element.html('<div class="m-l ">No data available</div>');
+            //是否显示全部标记为已读
+            if(data.total==0){
+                $("#read_all").css('display','none');
             }
+
+
         }
 
     });
 }
+
+
+function addMss(){
+    var $el = $('.nav-user'), $n = $('.count:first', $el), $v = parseInt($n.text());
+    $('.count', $el).fadeOut().fadeIn().text($v+1);
+}
+//添加普通信息,上面
+function addCommonMssUp(data){
+    var html = template('mess_common', data);
+    var $el = $('.nav-user');
+    addMss();
+    $(html).hide().prependTo($el.find('.list-group')).slideDown().css('display','block');
+
+}
+function addCommonMssDown(data){
+    var html = template('mess_common', data);
+    var $el = $('.nav-user');
+    $(html).hide().appendTo($el.find('.list-group')).slideDown().css('display','block');
+}
+
+
+
+//添加公告（上面）
+function addNoticeUp(data){
+    var html = template('mess_notice', data);
+    var $el = $('.nav-user');
+    addMss();
+
+    $(html).hide().prependTo($el.find('.list-group')).slideDown().css('display','block');
+
+}
+
+function addNoticeDown(data){
+    var html = template('mess_notice', data);
+    var $el = $('.nav-user');
+    $(html).hide().appendTo($el.find('.list-group')).slideDown().css('display','block');
+
+}
+
+//最上面最新的信息的时间
+function getLastMessTime(){
+    var top = $($('.nav-user').find('.list-group').children("span:first"));
+    var lastTime=top.data("time");
+    return lastTime;
+}
+//最下面消息的时间
+function getPreviousTime(){
+    var last = $($('.nav-user').find('.list-group').children("span:last"));
+    var previousTime=last.data("time");
+    return previousTime;
+}
+
+//处理信息（down）
+function handleMessDown(data) {
+    var messData = data.data.rows;
+    if (messData.length > 0) {
+        $.each(messData, function (i, value) {
+            if (this.type == 1) {
+                //私信,普通信息
+                addCommonMssDown(this);
+            } else if (this.type == 2) {
+                addNoticeDown(this);
+            }
+        });
+    }
+
+    if(data.data.total!=messData.length){
+        //还有信息
+
+    }else{
+        //隐藏显示更多按钮
+        $("#btn_show_more_mess").css('display','none');
+    }
+}
+//处理信息(上面)
+function handleMessUp(data) {
+    var messData = data.data.rows;
+    messData.reverse();
+    if (messData.length > 0) {
+        //全部标记为已读显示出来
+        $("#read_all").css('display','block');
+        $.each(messData, function (i, value) {
+            if (this.type == 1) {
+                //私信,普通信息
+                addCommonMssUp(this);
+            } else if (this.type == 2) {
+                addNoticeUp(this);
+            }
+        });
+    }
+}
+//定时器
+function job(){
+    if(typeof(currentUserId)=="undefined"||currentUserId==null){
+        return;
+    }
+    setInterval(function(){
+        var lastTime=getLastMessTime();
+        //定时刷新信息
+        //拿到最新信息
+        server.user.showMyLastMess(function(data){
+            handleMessUp(data);
+
+        },lastTime)
+
+
+    },1000*10);
+}
+
+//移除一条信息
+function removeMess(){
+
+}
+
+

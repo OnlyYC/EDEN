@@ -225,7 +225,10 @@ function fmtPlayCount(playCount){
 // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
 function fmtDate(time,fmt) {
     fmt=fmt||'yyyy-MM-dd ';
-    var da=new Date(time);
+    if (typeof time === 'string'){
+        time=parseFloat(time);
+    }
+        var da=new Date(time);
     var currentDate=new Date();
     var currentTime=currentDate.getTime();
     //不足一分，返回多少秒
@@ -260,6 +263,9 @@ function fmtDate(time,fmt) {
         if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
     return fmt;
 }
+
+//注册方法到模板中
+template.helper('fmtDate',fmtDate);
 
 //对象所有属性,属性值不为-1
 function getObjProperty(obj){

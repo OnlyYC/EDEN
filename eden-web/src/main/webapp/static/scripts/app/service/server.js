@@ -120,6 +120,34 @@
             dao.collect(targetId,collectType).done(function(data){
                 Base.processData(data);
             })
+        },
+        //用户最新信息
+        showMyLastMess:function(callBack,lastTime,pageSize,pageNumber){
+            var data={
+                pageSize:pageSize,
+                pageNumber:pageNumber,
+                lastTime:lastTime
+            };
+            dao.showMyLastMess(data).done(function(data){
+                callBack(data);
+            });
+        },
+        //用户之前的未读信息
+        showMyUreadMessPrevious:function(callBack,previousTime,pageSize,pageNumber){
+            var data={
+                pageSize:pageSize,
+                pageNumber:pageNumber,
+                previousTime:previousTime
+            };
+            dao.showMyUreadMessPrevious(data).done(function(data){
+                callBack(data);
+            });
+        },
+        //设置消息为已读
+        readMess:function(callBack,messIdArray){
+            dao.readMess(messIdArray).done(function(data){
+                callBack(data);
+            });
         }
 
 

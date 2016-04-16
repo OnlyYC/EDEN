@@ -31,4 +31,20 @@ public interface MessMapperCustom {
      * @return
      */
     List<Mess>findUserLastMess(@Param("userId")Long userId,@Param("lastTime")Long lastTime);
+
+    /**
+     * 用户之前的信息(未读)
+     * @param userId
+     * @param previousTime
+     * @return
+     */
+    List<Mess> findUserPreviousMess(@Param("userId") Long userId, @Param("previousTime") Long previousTime);
+
+    /**
+     * 置消息为已读
+     * @param userId
+     * @param messId
+     * @return
+     */
+    int updateMessRead(@Param("userId") Long userId,@Param("messId") Long[] messId);
 }

@@ -159,6 +159,24 @@
         });
     };
 
+    //用户之前未读的信息
+    var showMyUreadMessPrevious=function(paramData){
+        return utils.post(baseUrl+'/api/mess/showMyUreadMessPrevious',paramData,function(data){
+            return data;
+        });
+    };
+
+    //设置消息为已读
+    var readMess=function(messIdArray){
+        var data={
+            messId:messIdArray
+        };
+        var paramData=JSON.stringify(data);
+        return utils.post(baseUrl+'/api/mess/readMess',data,function(data){
+            return data;
+        })
+    };
+
 
 
 
@@ -178,7 +196,9 @@
         submitComment:submitComment,
         collect:collect,
         praiseComment:praiseComment,
-        showMyLastMess:showMyLastMess
+        showMyLastMess:showMyLastMess,
+        showMyUreadMessPrevious:showMyUreadMessPrevious,
+        readMess:readMess
 
     }
 
